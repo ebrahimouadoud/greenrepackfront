@@ -66,17 +66,14 @@
         </a>
         <vs-dropdown-menu class="topbar-dd">
           <vs-dropdown-item>
-            <vs-icon icon="person_outline" class="mr-1"></vs-icon>My Profile
+            <vs-icon icon="person_outline" class="mr-1"></vs-icon>Mon profile
           </vs-dropdown-item>
           <vs-dropdown-item>
-            <vs-icon icon="sentiment_very_satisfied" class="mr-1"></vs-icon>My Balance
-          </vs-dropdown-item>
-          <vs-dropdown-item>
-            <vs-icon icon="mail_outline" class="mr-1"></vs-icon>Inbox
+            <vs-icon icon="history" class="mr-1"></vs-icon>Mes commandes
           </vs-dropdown-item>
           <hr class="mb-1" />
-          <vs-dropdown-item>
-            <vs-icon icon="gps_not_fixed" class="mr-1"></vs-icon>Account Setting
+          <vs-dropdown-item @click="logout">
+            <vs-icon icon="power_off" class="mr-1"></vs-icon>Déconnection
           </vs-dropdown-item>
         </vs-dropdown-menu>
       </vs-dropdown>
@@ -85,6 +82,8 @@
 </template>
 
 <script>
+import auth from '../../../auth'
+
 export default {
   name: "Navbar",
   props: {
@@ -102,13 +101,18 @@ export default {
   data: () => ({
     indexActive: 0,
     showToggle: false,
-    search: ""
+    search: "",
+    auth: auth
   }),
 
   methods: {
     //This is for sidebar trigger in mobile
     activeSidebar() {
       this.$store.commit("IS_SIDEBAR_ACTIVE", true);
+    },
+    logout(){
+      console.log(' LOGOUT ')
+      this.auth.logout()
     }
   }
 };
