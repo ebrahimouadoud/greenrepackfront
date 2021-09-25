@@ -154,8 +154,7 @@ export default {
                 )
         },
         goEdit(id){
-            /*
-            this.$router.push('/user/edit/'+ id )*/
+            this.$router.push('/user/edit/'+ id )
         },
         deleteUser(id){
             axios.delete('/user/' + id )

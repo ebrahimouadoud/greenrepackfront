@@ -19,7 +19,7 @@
                 <div class="vs-component vs-con-input-label vs-input inputx col-4 ml-4 vs-input-primary">
                     <label for="" class="vs-input--label">Role</label>
                         <div class="vs-con-input">
-                            <b-form-select class="vs-inputx vs-input--input normal"
+                            <b-form-select :disabled="modif" class="vs-inputx vs-input--input normal"
                                 :class="{ 'is-invalid' : $v.role.$error }"
                                 :options="roles"  type="date" v-model="role"> 
                             </b-form-select>
@@ -71,11 +71,15 @@ export default {
         if(this.$route.params.id){
             console.log(this.$route.params.id)
             this.modif = true
-            axios.get('/api/users/' + this.$route.params.id)
+            axios.get('/user/' + this.$route.params.id)
             .then( result=> {
-                console.log( result.data.data)
-                this.name =  result.data.data.name
-                this.email = result.data.data.email
+                console.log( result.data.users)
+                this.email = result.data.users.email
+                this.lastname = result.data.users.lastname
+                this.firstname = result.data.users.firstname
+                this.username = result.data.users.username
+                this.telephone = result.data.users.telephone
+                this.role = result.data.users.roles[0].name
             }, error => {
                 swal("Erreur de chargement!",
                         "La page va être rechargé, réessayerz ou contactez votre administrateur",
@@ -101,7 +105,7 @@ export default {
                 //this.FormValsError = true
             }else{
                 if(this.modif){
-                axios.put('api/users/' + this.$route.params.id , {
+                axios.put('user/' + this.$route.params.id , {
                     email: this.email,
                     lastname: this.lastname,
                     firstname: this.firstname,
@@ -118,15 +122,9 @@ export default {
                         this.$router.push('/users')
                     }, error=>{
                         console.log('save error' ,error)
-                        this.$notify({
-                            group: 'foo',
-                            width: '200%' ,
-                            type: 'error',
-                            title: "Erreur durant l'enregistrement.",
-                            text: "une erreur s'est produite. veuillez réessayer ou contact l'administrateur",
-                            duration: 5000,
-                            speed: 1000
-                        })
+                        swal("Operation réussie!",
+                            "",
+                            "error");
                     }
                 )
                 }else{
