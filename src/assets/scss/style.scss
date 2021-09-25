@@ -1,0 +1,167 @@
+// Import Bootstrap source files (Required file)
+
+@import "variable";
+@import "./bootstrap/bootstrap";
+@import "./layout/layout";
+
+@import './icons/font-awesome/css/all.css';
+@import './icons/simple-line-icons/css/simple-line-icons.css';
+@import './icons/themify-icons/themify-icons.css';
+@import './icons/flag-icon-css/flag-icon.min.css';
+@import "./icons/material-design-iconic-font/css/materialdesignicons.min.css";
+
+.card{
+    border-radius: 2%;
+}
+
+/*******************
+Labels
+*******************/
+
+.label {
+    padding: 3px 10px;
+    line-height: 13px;
+    color: $white;
+    font-weight: 400;
+    border-radius: $border-radius;
+    font-size: 75%;
+}
+
+.label-rounded {
+    border-radius: 60px;
+}
+
+.label-custom {
+    background-color: $cyan;
+}
+
+.label-success {
+    background-color: $success;
+}
+
+.label-info {
+    background-color: $blue;
+}
+
+.label-warning {
+    background-color: $warning;
+}
+
+.label-danger {
+    background-color: $danger;
+}
+
+.label-megna {
+    background-color: $cyan;
+}
+
+.label-primary {
+    background-color: $primary;
+}
+
+.label-purple {
+    background-color: $purple;
+}
+
+.label-red {
+    background-color: $red;
+}
+
+.label-inverse {
+    background-color: $gray-800;
+}
+
+.label-default {
+    background-color: $gray-100;
+}
+
+
+
+.btn-circle {
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    padding: 2.2px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.btn {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.btn-circle.btn-sm {
+    width: 35px;
+    height: 35px;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 14px 15px;
+    font-size: 15px;
+    line-height: 23px;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 14px 15px;
+    font-size: 24px;
+}
+
+.login-register {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    width: 100%;
+    padding: 10% 0;
+    position: fixed;
+}
+.login-box {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.form-control {
+    border-radius: 2%;
+}
+.btn{
+    border-radius: 3%;
+}
+.page-titles {
+    background: $white;
+    padding: 14px 10px;
+    box-shadow: $shadow;
+    margin: 0 -25px 10px -25px; 
+    h4 {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+    .breadcrumb {
+        padding: 0px;
+        margin: 0px;
+        background: transparent;
+        font-size: 12px;
+        li {
+            
+            a{
+                color:$body-color;
+            }
+        }
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: "\e649";
+            font-family: themify;
+            color: $gray-400;
+            font-size: 11px;
+        }
+        .breadcrumb-item.active {
+            color: $themecolor;
+            font-weight: 400;
+        }
+    }
+}
