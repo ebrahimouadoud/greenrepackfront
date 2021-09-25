@@ -28,6 +28,11 @@ export default new Router({
                     index: 2,
                     component: () => import('./views/components/pages/users-manage.vue')
                 },{
+                    path: '/user/create',
+                    name: 'usercreate',
+                    index: 2,
+                    component: () => import('./views/components/pages/user-create.vue')
+                },{
                     path: '/products',
                     name: 'products',
                     index: 2,

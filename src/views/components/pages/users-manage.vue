@@ -54,6 +54,9 @@
                     <strong>Chargement...</strong>
                     </div>
                 </template>
+                <template v-slot:cell(name)="data">
+                    {{ data.item.firstname + " " + data.item.lastname }}
+                </template>
                 <template v-slot:cell(createdAt)="data">
                     {{ data.item.createdAt | formatDate }}
                 </template>
