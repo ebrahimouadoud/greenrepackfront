@@ -40,8 +40,8 @@ export default {
                     that.user.authed = true
                     that.user.login = result.data.login
                     that.user.id = result.data.id
-                    that.user.firstName = result.data.firstName
-                    that.user.lastName = result.data.lastName
+                    that.user.firstName = result.data.firstname
+                    that.user.lastName = result.data.lastname
                     that.user.email = result.data.email
                     that.checked = true
                 },
