@@ -83,7 +83,7 @@
 
 <script>
 import auth from '../../../auth'
-
+/* eslint-disable */ 
 export default {
   name: "Navbar",
   props: {

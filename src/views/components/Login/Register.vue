@@ -10,35 +10,40 @@
                         <h2 class="fs-title"> rejoignez nous ! </h2>
                         <h3 class="fs-subtitle">Informations personnelles</h3>
                          
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.firstname.$dirty }">
-                            <input type="text" class="form-control " :class="{'form-control-danger': $v.consultantData.firstname.$dirty }" 
-                                v-model="consultantData.firstname" placeholder="Prénom">
-                            <small v-if="!$v.consultantData.firstname.required && $v.consultantData.firstname.$dirty " class="form-control-feedback"> Ce champ est requis. </small> 
+                        <div class="form-group" :class="{'has-danger': $v.firstname.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.firstname.$error }" 
+                                v-model="firstname" placeholder="Prénom">
+                            <small v-if="$v.firstname.$error " class="form-control-feedback"> Ce champ est requis. </small> 
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.lastname.$dirty }">
-                            <input type="text" class="form-control " :class="{'form-control-danger': $v.consultantData.lastname.$dirty }" 
-                                v-model="consultantData.lastname" placeholder="Nom">
-                            <small v-if="!$v.consultantData.lastname.required && $v.consultantData.lastname.$dirty " class="form-control-feedback"> Ce champ est requis. </small> 
+                        <div class="form-group" :class="{'has-danger': $v.lastname.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.lastname.$error }" 
+                                v-model="lastname" placeholder="Nom">
+                            <small v-if="$v.lastname.$error " class="form-control-feedback"> Ce champ est requis. </small> 
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.username.$dirty }">
-                            <input type="text" class="form-control " :class="{'form-control-danger': $v.consultantData.lastname.$dirty }" 
-                                v-model="consultantData.username" placeholder="Nom d'utilisateur">
-                            <small v-if="!$v.consultantData.username.required && $v.consultantData.username.$dirty " class="form-control-feedback"> Ce champ est requis. </small> 
+                        <div class="form-group" :class="{'has-danger': $v.username.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.username.$error }" 
+                                v-model="username" placeholder="Nom d'utilisateur">
+                            <small v-if="$v.username.$error " class="form-control-feedback"> Ce champ est requis. </small> 
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.email.$dirty }">
-                            <input type="text" class="form-control " :class="{'form-control-danger': $v.consultantData.email.$dirty }" 
-                                v-model="consultantData.email" placeholder="Adresse mail">
-                            <small v-if="!$v.consultantData.email.required && $v.consultantData.email.$dirty " class="form-control-feedback"> Ce champ est requis. </small>
+                        <div class="form-group" :class="{'is-invalid': $v.email.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.email.$error }" 
+                                v-model="email" placeholder="Adresse mail">
+                            <small v-if="$v.email.$error " class="form-control-feedback"> Ce champ est requis. </small> 
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.pass.$dirty }">
-                            <input type="password" class="form-control " :class="{'form-control-danger': $v.consultantData.pass.$dirty }" 
-                                v-model="consultantData.pass" placeholder="mot de passe">
-                            <small v-if="!$v.consultantData.pass.required && $v.consultantData.pass.$dirty " class="form-control-feedback"> Ce champ est requis. </small> 
+                        <div class="form-group" :class="{'has-danger': $v.telephone.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.telephone.$error }" 
+                                v-model="telephone" placeholder="Téléphone">
+                            <small v-if="$v.telephone.$error" class="form-control-feedback"> Ce champ est requis. </small>
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.consultantData.cpass.$dirty }">
-                            <input type="password" class="form-control " :class="{'form-control-danger': $v.consultantData.cpass.$dirty }" 
-                                v-model="consultantData.cpass" placeholder="Confirmez le mot de passe">
-                            <small v-if="!$v.consultantData.cpass.required && $v.consultantData.cpass.$dirty" class="form-control-feedback"> Ce champ est requis. </small> 
+                        <div class="form-group" :class="{'has-danger': $v.pass.$error }">
+                            <input type="password" class="form-control " :class="{'is-invalid': $v.pass.$error }" 
+                                v-model="pass" placeholder="mot de passe">
+                            <small v-if="$v.pass.$error" class="form-control-feedback"> Ce champ est requis. </small> 
+                        </div>
+                        <div class="form-group" :class="{'has-danger': $v.cpass.$error }">
+                            <input type="password" class="form-control " :class="{'is-invalid': $v.cpass.$error }" 
+                                v-model="cpass" placeholder="Confirmez le mot de passe">
+                            <small v-if="$v.cpass.$error" class="form-control-feedback"> Ce champ est requis. </small> 
                         </div>
                         <button @click="submitRegister()"  type="button" class="btn btn-success btn-rounded">
                             <i class="fa fa-check"></i> Valider
@@ -54,20 +59,18 @@
 
 import axios from 'axios'
 import swal from 'sweetalert'
-import { required } from 'vuelidate/lib/validators'
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 /* eslint-disable */
 export default {
     data() {
         return {
-            firstStap: true,
-            consultantData:{
-                firstname: null,
-                lastname: null,
-                email: null,
-                pass: null,
-                cpass: null,
-                username: null
-            }
+            firstname: null,
+            lastname: null,
+            email: null,
+            pass: null,
+            cpass: null,
+            username: null,
+            telephone: null
         }
     },
     methods: {
@@ -76,17 +79,16 @@ export default {
             const timeElapsed = Date.now();
             const today = new Date(timeElapsed);
             let requestData = {
-                email: this.consultantData.email,
-                firstName: this.consultantData.firstname,
-                lastName: this.consultantData.lastname,
-                username: this.consultantData.username,
-                password: this.consultantData.pass,
-                lastModifiedBy: today.toISOString(),
-                lastModifiedDate: today.toISOString(),
-                createdDate: today.toISOString()
+                email: this.email,
+                firstname: this.firstname,
+                lastname: this.lastname,
+                username: this.username,
+                password: this.pass,
+                telephone: this.telephone
             }
             this.$v.$touch()
-            axios.post("auth/signup", requestData, {
+            if(!this.$v.$invalid){
+                axios.post("auth/signup", requestData, {
                 'Content-Type' : 'application/json'
                 } )
                 .then(res=>{
@@ -100,29 +102,32 @@ export default {
                         "une erreur est survenue veuillez réessayer ultérieurement!",
                         "error")
                 })
+            }
         }
     },
     validations: {
-        consultantData:{
-            firstname: {
-                    required
-                },
-            username:{
+        firstname: {
                 required
             },
-            lastname: {
-                    required
-                },
-            email:{
-                    required
-                },
-            pass: {
-                    required
-                },
-            cpass: {
+        username:{
+            required
+        },
+        lastname: {
                 required
-            }
-        }
+            },
+        email:{
+                required, email
+            },
+        pass: {
+                required,
+                minLength: minLength(4)
+            },
+        cpass: {
+            sameAsPassword: sameAs('pass')
+        },
+        telephone:{
+            required
+        } 
     }
 }
 </script>
@@ -134,7 +139,7 @@ export default {
 .form-group {
     margin-top: 5px; 
 }
-.form-control .form-control-danger{
+.form-control .is-invalid{
     margin-bottom: 2px;
 }
 #msform input, #msform textarea {

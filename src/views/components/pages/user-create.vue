@@ -163,8 +163,7 @@ export default {
         },
         email: {
           required,
-          email, 
-          minLength: minLength(4)
+          email
         },
         role: {
           required:  requiredIf(function () {
