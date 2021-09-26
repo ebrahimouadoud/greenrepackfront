@@ -29,14 +29,7 @@ export default {
 
                     console.log('RES : ', result.data.roles)
                     that.user.login = result.data.login
-                    //that.user.role = result.data.roles[0]
-                    if( result.data.roles.includes('ROLE_ADMIN')){
-                        that.user.role = 'ROLE_ADMIN'
-                        console.log('ADMIN')
-                    }else{
-                        that.user.role = result.data.roles[0]
-                        console.log(' not ADMIN')
-                    }
+                    that.user.role = result.data.roles[0]
                     that.user.authed = true
                     that.user.login = result.data.login
                     that.user.id = result.data.id
@@ -57,6 +50,10 @@ export default {
             that.checked = true
         }
     },
+    isAdminOrUser(){
+        
+        return (this.user.role=="ROLE_ADMIN" || this.user.role=="ROLE_MANAGER" )
+    },
     login(e_mail, pass) {
         console.log(' e_mail, pass', e_mail, pass)
         axios.post("auth/signin",
@@ -69,12 +66,12 @@ export default {
             console.log('datas : ', result.data)
             this.user.authed = true
             this.checked = true
-            this.user.roles = result.data.roles
             this.user.username = result.data.username
             this.user.id = result.data.id
             this.user.firstName = result.data.firstname
             this.user.lastName = result.data.lastname
             this.user.email = result.data.email
+            this.user.role = result.data.roles[0]
             localStorage.setItem('x-access-token', result.data.accessToken)
             axios.defaults.headers.common['x-access-token'] = localStorage.getItem('x-access-token')
         }, error => {

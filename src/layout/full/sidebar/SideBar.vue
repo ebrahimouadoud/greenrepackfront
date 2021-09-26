@@ -1,7 +1,7 @@
 <template>
 
    <div id="parentx">
-    <vs-sidebar default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
+    <vs-sidebar v-if="auth.isAdminOrUser()" default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
         <div class="header-sidebar text-center" slot="header">
             <vs-avatar size="70px" :src="require('@/assets/images/users/1.jpg')"/>
             <h4> {{ auth.user.firstName }} {{ auth.user.lastName }} </h4>
@@ -26,6 +26,40 @@
         <template >
             <vs-sidebar-item icon="book" :to="'/catalogue'" >
               <span class="hide-in-minisidebar">Catalogue</span>
+            </vs-sidebar-item>
+        </template>
+        <template v-for="(sidebarLink, index) in sidebarLinks" >
+            <vs-sidebar-item :icon="sidebarLink.icon" :to="sidebarLink.url" :key="`sidebarLink-${index}`" :index="index">
+              <span class="hide-in-minisidebar">{{ sidebarLink.name }}</span>
+            </vs-sidebar-item>
+        </template>  
+
+    </vs-sidebar>
+    <vs-sidebar v-else default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
+        <div class="header-sidebar text-center" slot="header">
+            <vs-avatar size="70px" :src="require('@/assets/images/users/1.jpg')"/>
+            <h4> {{ auth.user.firstName }} {{ auth.user.lastName }} </h4>
+              <small>{{ auth.user.email }}</small>
+            
+        </div>
+        <template >
+            <vs-sidebar-item icon="autorenew" :to="'/users'" >
+              <span class="hide-in-minisidebar"> Mes reventes </span>
+            </vs-sidebar-item>
+        </template>
+        <template >
+            <vs-sidebar-item icon="list" :to="'/products'" >
+              <span class="hide-in-minisidebar">Mes commandes</span>
+            </vs-sidebar-item>
+        </template>
+        <template >
+            <vs-sidebar-item icon="shopping_cart" :to="'/resalls'" >
+              <span class="hide-in-minisidebar">Boutique</span>
+            </vs-sidebar-item>
+        </template>
+        <template >
+            <vs-sidebar-item icon=""  >
+              <span class="hide-in-minisidebar"></span>
             </vs-sidebar-item>
         </template>
         <template v-for="(sidebarLink, index) in sidebarLinks" >
