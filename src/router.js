@@ -53,10 +53,20 @@ export default new Router({
                     index: 2,
                     component: () => import('./views/components/pages/catalogue.vue')
                 },{
+                    path: '/token/verify/:tkn',
+                    name: 'tokenverify',
+                    index: 2,
+                    component: () => import('./views/components/Login/token-validation.vue')
+                },{
                     path: '/avatar',
                     name: 'Avatar',
                     index: 3,
                     component: () => import('./views/components/vuesax/avatar/avatar.vue')
+                },{
+                    path: '/alert',
+                    name: 'Alert',
+                    index: 3,
+                    component: () => import('./views/components/vuesax/alert/alert.vue')
                 },{
                     path: '/breadcrumb',
                     name: 'Breadcrumb',
