@@ -43,7 +43,7 @@
             
         </div>
         <template >
-            <vs-sidebar-item icon="autorenew" :to="'/users'" >
+            <vs-sidebar-item icon="autorenew" :to="'/myresalls'" >
               <span class="hide-in-minisidebar"> Mes reventes </span>
             </vs-sidebar-item>
         </template>

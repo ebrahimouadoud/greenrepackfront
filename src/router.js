@@ -57,7 +57,14 @@ export default new Router({
                     name: 'tokenverify',
                     index: 2,
                     component: () => import('./views/components/Login/token-validation.vue')
-                },{
+                }//Resalls
+                ,{
+                    path: '/myresalls',
+                    name: 'myresalls',
+                    index: 2,
+                    component: () => import('./views/components/pages/user-resalle-manage.vue')
+                }
+                ,{
                     path: '/avatar',
                     name: 'Avatar',
                     index: 3,
