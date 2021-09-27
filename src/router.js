@@ -65,6 +65,12 @@ export default new Router({
                     component: () => import('./views/components/pages/user-resalle-manage.vue')
                 }
                 ,{
+                    path: '/resall/new',
+                    name: 'newresall',
+                    index: 2,
+                    component: () => import('./views/components/pages/new-resall.vue')
+                }
+                ,{
                     path: '/avatar',
                     name: 'Avatar',
                     index: 3,

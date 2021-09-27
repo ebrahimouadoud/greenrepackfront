@@ -16,9 +16,6 @@
                     :busy="isBusy"
                     :fields="fields"
                     class="mt-3"
-                    :per-page="p_Page"
-                    :filter="tSearch"
-                    :current-page="c_Page"
                     outlined>
                 <template v-slot:table-busy>
                     <div class="text-center text-danger my-2">
@@ -55,7 +52,7 @@
                             La revente est en attente vous pouvez accepté ou refuser.
                         </vs-alert>
                         <div v-if="resallOnManage.etat=='En Attendant'" >
-                            <vs-button @click="acceptResall(resallOnManage.id)" class="ml-5" color="success" type="filled">Accepter</vs-button>
+                            <vs-button @click="proceedAccept()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="refuseResall(resallOnManage.id)" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
                         <p v-if="resallOnManage.etat=='Accepté'" >
@@ -63,7 +60,14 @@
                                 Vous avez accepté la revente, vous allez être informé lors de la récéption.
                             </vs-alert>
                         </p>
-                    </div> 
+                    </div>
+                    <vs-popup classContent="popup-example" title="Vos Informations Bancaires" :active.sync="accepting">
+                        <vs-input :danger="$v.bic.$error" class="inputx mb-4 col-11" placeholder="BIC" v-model="bic"/>
+                        <vs-input :danger="$v.iban.$error" class="inputx mb-4 col-11" placeholder="IBAN" v-model="iban"/>
+                        <vs-button @click="acceptResall" color="primary" type="filled">
+                            Valider
+                        </vs-button>
+                    </vs-popup>
                 </vs-popup>
             </div>
         </div>
@@ -73,6 +77,7 @@
 import ThemifyIcon from "vue-themify-icons";
 import brc from '../custom/breadc.vue'
 import axios from 'axios';
+import { required } from 'vuelidate/lib/validators'
 /* eslint-disable */
 export default {
     components: {
@@ -86,14 +91,13 @@ export default {
                     {label: "Prix", key :"prixPropose"  },
                     {label: "Status", key: "etat" },
                         "Gérer"],
-            c_Page: 1,
-            p_Page: 5,
-            search:'',
-            tSearch: '',
             isBusy: false,
+            iban: null,
+            bic: null,
             tRows: 0,
             managingResall: false,
-            resallOnManage: null
+            resallOnManage: null,
+            accepting: false
         }
     },
     mounted(){
@@ -105,6 +109,9 @@ export default {
         }
     },
     methods:{
+        proceedAccept(){
+            this.accepting = true
+        },
         loadData(ctx, callback){
             console.log("loading")
             axios.get('/resall/all' )
@@ -118,59 +125,36 @@ export default {
                         "error");
             }  )
         },
-        switchStatus(id){
-            console.log("switching status of user with id: ", id)
-            axios.put('/user/toggleActivation/' + id )
-                .then(result =>{
-                        swal("",
-                            "Changé avec succés.",
-                            "success");
-                        this.$refs.resalls.refresh();
-                    },error => {
-                        swal("Erreur!",
-                            "Une erreur est survenue, veuillez contacter un administrateur",
-                            "error");
-                    }
-                )
-        },
         manageResall(item){
             this.managingResall = true
             this.resallOnManage = item 
         },
-        deleteUser(id){
-            axios.delete('/user/' + id )
-                .then(result =>{
-                        this.$refs.resalls.refresh();
-                        swal("",
-                            "Supprimé avec succés.",
-                            "success");
-                    },error => {
-                        swal("Erreur!",
-                            "Une erreur est survenue, veuillez contacter un administrateur",
-                            "error");
-                    }
-                )
-        },
-        filter(){
-            this.tSearch = this.search
-            this.c_Page = 1
-        },
-        acceptResall(id){
-            console.log(' ACCEPT :: ', id)
-            axios.put('/resall/proposal/accept/' + id )
-                .then(result =>{
-                        swal("",
-                            "Acceptée.",
-                            "success");
-                        this.$refs.resalls.refresh();
-                        this.managingResall = false
-                        this.resallOnManage = null 
-                    },error => {
-                        swal("Erreur!",
-                            "Une erreur est survenue, veuillez contacter un administrateur",
-                            "error");
-                    }
-                )
+        acceptResall(){
+            this.$v.$touch()
+            console.log(this.$v)
+            if(this.$v.$invalid){
+                //this.FormValsError = true
+            }else{
+                axios.put('/resall/proposal/accept/' + this.resallOnManage.id, {
+                    bic: this.bic,
+                    iban: this.iban
+                } )
+                    .then(result =>{
+                            swal("",
+                                "Acceptée.",
+                                "success");
+                            this.$refs.resalls.refresh();
+                            this.managingResall = false
+                            this.resallOnManage = null
+                            this.accepting = false
+                        },error => {
+                            swal("Erreur!",
+                                "Une erreur est survenue, veuillez contacter un administrateur",
+                                "error");
+                        }
+                    )
+            }
+            
         },
         refuseResall(id){
             console.log(' REFUSE :: ', id)
@@ -188,6 +172,14 @@ export default {
                             "error");
                     }
                 )
+        }
+    },
+    validations: {
+        iban: {
+          required,
+        },
+        bic: {
+          required,
         }
     }
 }
