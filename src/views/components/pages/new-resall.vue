@@ -199,8 +199,9 @@ export default {
                             color: this.color,
                             age: 36
                     } ).then( res => {
-                        swal("Operation réussie!",
-                                "",
+                        console.log(res.data.revente.prixPropose)
+                        swal("Revente enregistré!",
+                                "Nous vous proposont " + res.data.revente.prixPropose + "€ pour cet revente, vous pouvez accepter ou refuser notre proposition sur la liste de vos reventes.",
                                 "success");
                             console.log(res)
                             this.$router.push('/myresalls')

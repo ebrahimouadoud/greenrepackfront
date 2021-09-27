@@ -143,10 +143,12 @@ export default {
                             swal("",
                                 "Acceptée.",
                                 "success");
-                            this.$refs.resalls.refresh();
                             this.managingResall = false
                             this.resallOnManage = null
                             this.accepting = false
+                            this.$refs.resalls.refresh();
+                            this.$refs.resalls.refresh();
+                            this.$refs.resalls.refresh();
                         },error => {
                             swal("Erreur!",
                                 "Une erreur est survenue, veuillez contacter un administrateur",
