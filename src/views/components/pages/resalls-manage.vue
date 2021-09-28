@@ -3,8 +3,8 @@
         <div>
             <brc :name="'Revente'" 
                 :crlink="'#/resall/new'"
-                :ope="'Mes reventes'" 
-                :showbtn="true">
+                :ope="'Toutes les reventes'" 
+                :showbtn="false">
             </brc>
         </div>
 
