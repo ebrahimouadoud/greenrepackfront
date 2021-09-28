@@ -14,13 +14,13 @@
             </vs-sidebar-item>
         </template>
         <template >
-            <vs-sidebar-item icon="inventory" :to="'/products'" >
-              <span class="hide-in-minisidebar">Produits</span>
+            <vs-sidebar-item icon="shop" :to="'/resalls'" >
+              <span class="hide-in-minisidebar">Reventes</span>
             </vs-sidebar-item>
         </template>
         <template >
-            <vs-sidebar-item icon="shop" :to="'/resalls'" >
-              <span class="hide-in-minisidebar">Reventes</span>
+            <vs-sidebar-item icon="inventory" :to="'/products'" >
+              <span class="hide-in-minisidebar">Produits</span>
             </vs-sidebar-item>
         </template>
         <template >
