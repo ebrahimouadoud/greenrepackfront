@@ -47,8 +47,9 @@
       Craete new dd
       -->
       <vs-dropdown vs-trigger-click left class="cursor-pointer pr-2 pl-2 ml-1 mr-1">
-        <a class="text-white-dark" href="#">
-          <vs-icon icon="mode_comment"></vs-icon>
+        <a class="text-white-dark mr-4" href="#">
+          <vs-icon icon="shopping_cart"></vs-icon>
+          <div class="cart_count mr-4"><span> {{cardCount}} </span></div>
         </a>
         <vs-dropdown-menu class="topbar-dd">
           <vs-dropdown-item>Action</vs-dropdown-item>
@@ -83,6 +84,7 @@
 
 <script>
 import auth from '../../../auth'
+import axios from 'axios'
 /* eslint-disable */ 
 export default {
   name: "Navbar",
@@ -96,15 +98,18 @@ export default {
     },
     logo: {
       type: String
+    },
+    cardCount:{
+      type : Number
     }
   },
   data: () => ({
     indexActive: 0,
     showToggle: false,
-    search: "",
-    auth: auth
+    search: ""
   }),
-
+  mounted(){
+  },
   methods: {
     //This is for sidebar trigger in mobile
     activeSidebar() {
@@ -117,3 +122,56 @@ export default {
   }
 };
 </script>
+
+<style>
+
+
+.cart_count {
+    position: absolute;
+    bottom: -1px;
+    right: -14px;
+    width: 23px;
+    height: 23px;
+    background: #0e8ce4;
+    border-radius: 50%;
+    text-align: center
+}
+
+.cart_count span {
+    display: block;
+    line-height: 23px;
+    font-size: 12px;
+    color: #FFFFFF;
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+    transform: translateY(1px)
+}
+
+.cart_content {
+    margin-left: 28px
+}
+
+
+
+
+
+@media only screen and (max-width: 575px) {
+
+    .cart_content {
+        margin-left: 18px
+    }
+
+    .cart_count {
+        width: 21px;
+        height: 21px
+    }
+
+    .cart_count span {
+        line-height: 21px
+    }
+
+   
+}
+</style>

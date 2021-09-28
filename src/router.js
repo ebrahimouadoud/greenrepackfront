@@ -27,7 +27,15 @@ export default new Router({
                     name: 'users',
                     index: 2,
                     component: () => import('./views/components/pages/users-manage.vue')
-                },{
+                },
+                //store
+                {
+                    path: '/store',
+                    name: 'store',
+                    index: 2,
+                    component: () => import('./views/components/pages/store.vue')
+                },
+                {
                     path: '/user/create',
                     name: 'usercreate',
                     index: 2,

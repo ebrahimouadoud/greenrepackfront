@@ -2,6 +2,7 @@
   <div class="main-wrapper">
     <!---Navigation-->
     <Navbar
+      :cardCount="cardCount"
       :topbarColor="topbarColor"
       :logo="require('@/assets/images/logo/logo-light-icon.png')"
       :title="logotitle"
@@ -19,7 +20,9 @@
 import Navbar from "@/layout/full/header/Navbar.vue";
 import SideBar from "@/layout/full/sidebar/SideBar.vue";
 import sidebarLinks from "@/layout/full/sidebar/sidebarlinks.js";
-
+import axios from 'axios'
+import auth from '../../auth'
+/* eslint-disable */
 export default {
   name: "MainContainer",
   components: {
@@ -29,8 +32,23 @@ export default {
   data: () => ({
     topbarColor: "#2a3b73",
     logotitle: "Green Repack",
-    sidebarLinks: sidebarLinks
+    sidebarLinks: sidebarLinks,
+    cardCount: 0,
+    auth: auth
   }),
-  methods: {}
+  mounted(){
+    if( ! this.auth.isAdminOrUser() ){
+      this.loadMyCart()
+    }
+  },
+  methods: {
+    loadMyCart(){
+      axios.get('card/me')
+        .then(res=>{
+          console.log( ' CARD RES  :: ', res.data)
+          this.cardCount = res.data.count
+        })
+    },
+  }
 };
 </script>

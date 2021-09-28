@@ -48,13 +48,13 @@
             </vs-sidebar-item>
         </template>
         <template >
-            <vs-sidebar-item icon="list" :to="'/products'" >
-              <span class="hide-in-minisidebar">Mes commandes</span>
+            <vs-sidebar-item icon="storefront" :to="'/store'" >
+              <span class="hide-in-minisidebar">Boutique</span>
             </vs-sidebar-item>
         </template>
         <template >
-            <vs-sidebar-item icon="shopping_cart" :to="'/resalls'" >
-              <span class="hide-in-minisidebar">Boutique</span>
+            <vs-sidebar-item icon="list" :to="'/products'" >
+              <span class="hide-in-minisidebar">Mes commandes</span>
             </vs-sidebar-item>
         </template>
         <template >
