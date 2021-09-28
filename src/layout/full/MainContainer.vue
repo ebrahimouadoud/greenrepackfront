@@ -27,7 +27,7 @@ export default {
     SideBar
   },
   data: () => ({
-    topbarColor: "#4F5467",
+    topbarColor: "#2a3b73",
     logotitle: "Green Repack",
     sidebarLinks: sidebarLinks
   }),
