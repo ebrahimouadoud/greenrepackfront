@@ -1,5 +1,5 @@
 <template>
-    <div class="login-register">
+    <div class="login-register" style="padding: 0;">
         <div class="login-box">
             <div class="">
                 <a href="javascript:void(0)" class="text-center m-b-40"></a>
@@ -32,8 +32,13 @@
                         </div>
                         <div class="form-group" :class="{'has-danger': $v.telephone.$error }">
                             <input type="text" class="form-control " :class="{'is-invalid': $v.telephone.$error }" 
-                                v-model="telephone" placeholder="Téléphone">
+                                v-model="telephone" placeholder="Téléphon: +33011224455">
                             <small v-if="$v.telephone.$error" class="form-control-feedback"> Ce champ est requis. </small>
+                        </div>
+                        <div class="form-group" :class="{'has-danger': $v.adresse.$error }">
+                            <input type="text" class="form-control " :class="{'is-invalid': $v.adresse.$error }" 
+                                v-model="adresse" placeholder="Adresse">
+                            <small v-if="$v.adresse.$error" class="form-control-feedback"> Ce champ est requis. </small>
                         </div>
                         <div class="form-group" :class="{'has-danger': $v.pass.$error }">
                             <input type="password" class="form-control " :class="{'is-invalid': $v.pass.$error }" 
@@ -70,7 +75,8 @@ export default {
             pass: null,
             cpass: null,
             username: null,
-            telephone: null
+            telephone: null,
+            adresse: null
         }
     },
     methods: {
@@ -84,7 +90,8 @@ export default {
                 lastname: this.lastname,
                 username: this.username,
                 password: this.pass,
-                telephone: this.telephone
+                telephone: this.telephone,
+                adresse: this.adresse
             }
             this.$v.$touch()
             if(!this.$v.$invalid){
@@ -127,7 +134,10 @@ export default {
         },
         telephone:{
             required
-        } 
+        },
+        adresse:{
+            required
+        }
     }
 }
 </script>
