@@ -43,10 +43,11 @@ export default {
   },
   methods: {
     loadMyCart(){
+      console.log( 'MAIN  this.$parent.loadMyCart()' )
       axios.get('card/me')
         .then(res=>{
           console.log( ' CARD RES  :: ', res.data)
-          this.cardCount = res.data.count
+          this.cardCount = res.data.rows[0].produits.length
         })
     },
   }

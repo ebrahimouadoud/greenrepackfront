@@ -26,7 +26,11 @@
                                             </p>
                                         </td>
                                         <td > {{ prd.prix_vente }} €</td>
-                                        <td align="center"><a href="javascript:void(0)" class="text-inverse" title="" data-bs-toggle="tooltip" data-original-title="Delete"><i class="ti-trash text-dark"></i></a></td>
+                                        <td align="center">
+                                            <button @click="deleteItem(prd.id)" href="javascript:void(0)" class=" btn text-inverse" title="" data-bs-toggle="tooltip" data-original-title="Delete">
+                                                <i class="ti-trash text-dark"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -123,6 +127,7 @@ export default {
         loadMyCart(){
             axios.get('card/me')
                 .then(res=>{
+                    this.total = 0
                     if( res.data.rows.length > 0 ){
                         console.log( ' CARD RES -- :: ', res.data.rows[0].produits )
                         this.productsCollectins = res.data.rows[0].produits
@@ -137,6 +142,14 @@ export default {
         },
         payeCard(){
             this.$v.$touch()
+        },
+        deleteItem(id){
+            console.log( ' DELETE ID ::: ', id  )
+            axios.delete('card/delete/'+id)
+                .then(res => {
+                    this.loadMyCart()
+                    this.$parent.loadMyCart()
+                })
         }
     },
     validations: {
