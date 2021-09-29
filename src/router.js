@@ -42,6 +42,12 @@ export default new Router({
                     component: () => import('./views/components/pages/myorders.vue')
                 },
                 {
+                    path: '/manageorders',
+                    name: 'manageorders',
+                    index: 40,
+                    component: () => import('./views/components/pages/manage-orders.vue')
+                },
+                {
                     path: '/mycard',
                     name: 'mycard',
                     index: 39,

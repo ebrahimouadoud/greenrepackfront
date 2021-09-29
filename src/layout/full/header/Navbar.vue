@@ -32,7 +32,7 @@
       Craete new dd
       -->
       <vs-dropdown vs-trigger-click left class="cursor-pointer pr-2 pl-2 ml-1 mr-1">
-        <a class="text-white-dark mr-4" >
+        <a v-if="!auth.isAdminOrManager()" class="text-white-dark mr-4" >
           <vs-icon icon="shopping_cart"></vs-icon>
           <div class="cart_count mr-4"><span> {{cardCount}} </span></div>
         </a>

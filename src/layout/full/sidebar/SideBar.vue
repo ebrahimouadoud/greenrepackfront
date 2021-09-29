@@ -1,7 +1,7 @@
 <template>
 
    <div id="parentx">
-    <vs-sidebar v-if="auth.isAdminOrUser()" default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
+    <vs-sidebar v-if="auth.isAdminOrManager()" default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
         <div class="header-sidebar text-center" slot="header">
             <vs-avatar size="70px" :src="require('@/assets/images/users/1.jpg')"/>
             <h4> {{ auth.user.firstName }} {{ auth.user.lastName }} </h4>
@@ -21,6 +21,11 @@
         <template >
             <vs-sidebar-item icon="inventory" :to="'/products'" >
               <span class="hide-in-minisidebar">Produits</span>
+            </vs-sidebar-item>
+        </template>
+        <template >
+            <vs-sidebar-item icon="list" :to="'/manageorders'" >
+              <span class="hide-in-minisidebar">Commands</span>
             </vs-sidebar-item>
         </template>
         <template >

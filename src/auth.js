@@ -52,7 +52,7 @@ export default {
             that.checked = true
         }
     },
-    isAdminOrUser(){
+    isAdminOrManager(){
         
         return (this.user.role=="ROLE_ADMIN" || this.user.role=="ROLE_MANAGER" )
     },

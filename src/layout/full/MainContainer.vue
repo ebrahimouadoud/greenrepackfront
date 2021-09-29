@@ -37,7 +37,7 @@ export default {
     auth: auth
   }),
   mounted(){
-    if( ! this.auth.isAdminOrUser() ){
+    if( ! this.auth.isAdminOrManager() ){
       this.loadMyCart()
     }
   },
