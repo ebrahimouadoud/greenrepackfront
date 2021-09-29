@@ -53,7 +53,7 @@
             </vs-sidebar-item>
         </template>
         <template >
-            <vs-sidebar-item icon="list" :to="'/products'" >
+            <vs-sidebar-item icon="list" :to="'/myorders'" >
               <span class="hide-in-minisidebar">Mes commandes</span>
             </vs-sidebar-item>
         </template>
