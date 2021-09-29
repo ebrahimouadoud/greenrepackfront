@@ -57,10 +57,10 @@
           <img src="@/assets/images/users/1.jpg" alt="User" />
         </a>
         <vs-dropdown-menu class="topbar-dd">
-          <vs-dropdown-item>
+          <vs-dropdown-item href="#/myprofile" >
             <vs-icon icon="person_outline" class="mr-1"></vs-icon>Mon profile
           </vs-dropdown-item>
-          <vs-dropdown-item>
+          <vs-dropdown-item v-if="!auth.isAdminOrManager()">
             <vs-icon icon="history" class="mr-1"></vs-icon>Mes commandes
           </vs-dropdown-item>
           <hr class="mb-1" />

@@ -35,6 +35,13 @@ export default new Router({
                     index: 40,
                     component: () => import('./views/components/pages/store.vue')
                 },
+                //myprofile
+                {
+                    path: '/myprofile',
+                    name: 'myprofile',
+                    index: 40,
+                    component: () => import('./views/components/pages/myprofile.vue')
+                },
                 {
                     path: '/myorders',
                     name: 'myorders',
