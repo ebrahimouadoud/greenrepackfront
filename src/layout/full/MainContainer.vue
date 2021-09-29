@@ -47,7 +47,12 @@ export default {
       axios.get('card/me')
         .then(res=>{
           console.log( ' CARD RES  :: ', res.data)
-          this.cardCount = res.data.rows[0].produits.length
+          if(res.data.rows[0]){
+            this.cardCount = res.data.rows[0].produits.length
+          }else{
+            this.cardCount = 0
+          }
+          
         })
     },
   }

@@ -47,8 +47,8 @@
                         <hr>
                         <h2>{{ total }} €</h2>
                         <hr>
-                        <button @click="payeOrder" class="btn btn-success text-white">Payer ma commande</button>
-                        <button class="btn btn-dark btn-outline" ><i class="fa fa-arrow-left"></i> Continue mes achats</button>
+                        <button :disabled="total == 0" @click="payeOrder" class="btn btn-success text-white">Payer ma commande</button>
+                        <a href="#/store" class="btn btn-dark btn-outline" ><i class="fa fa-arrow-left"></i> Continue mes achats</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                                 <div class="row">
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <label class="form-label">Adresse</label> <code> (Ex : 1 rue de paris, Paris 75020) </code> 
+                                            <label class="form-label">Adresse de livraison</label> <code> (Ex : 1 rue de paris, Paris 75001) </code> 
                                             <vs-input :danger="$v.adresse.$error" class="inputx mb-4 col-11" placeholder="Ex : 1 rue de paris, Paris 75020" v-model="adresse"/>
                                         </div>
                                     </div>
@@ -103,10 +103,12 @@
 <script>
 import axios from 'axios'
 import { required, requiredIf } from 'vuelidate/lib/validators'
+import auth from '../../../auth'
 /* eslint-disable */ 
 export default {
     data() {
         return {
+            auth: auth,
             productsCollectins: [],
             total: 0,
             payingCommand: false,
@@ -119,6 +121,7 @@ export default {
     },
     mounted(){
         this.loadMyCart()
+        this.adresse = auth.user.adresse
     },
     methods: {
         payeOrder(){
@@ -142,6 +145,26 @@ export default {
         },
         payeCard(){
             this.$v.$touch()
+            if(!this.$v.$invalid){
+                axios.post('orders/create', {
+                    number: this.cardnum,
+                    exp_month: this.exp_month,
+                    exp_year: this.exp_year ,
+                    cvc: this.cvc ,
+                    adresse: this.adresse
+                }).then(res => {
+                        this.payingCommand = false
+                        swal("Paiement réussi!", 
+                            "Votre commande à bien été enregistrée, une facture vous est envoyé par mail!",
+                            "success")
+                        this.productsCollectins = []
+                        this.$parent.loadMyCart()
+                }, err=> {
+                    swal("Erreur!", 
+                        "une erreur est survenue veuillez réessayer ultérieurement!",
+                        "error")
+                } )
+            }
         },
         deleteItem(id){
             console.log( ' DELETE ID ::: ', id  )

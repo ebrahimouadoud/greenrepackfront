@@ -11,7 +11,8 @@ export default {
         id: null,
         firstName: null,
         lastName: null,
-        email: null
+        email: null,
+        adresse: null
     },
     logout(){
         localStorage.removeItem('x-access-token')
@@ -36,6 +37,7 @@ export default {
                     that.user.firstName = result.data.firstname
                     that.user.lastName = result.data.lastname
                     that.user.email = result.data.email
+                    that.user.adresse = result.data.adresse
                     that.checked = true
                 },
                 error=>{
@@ -72,6 +74,7 @@ export default {
             this.user.lastName = result.data.lastname
             this.user.email = result.data.email
             this.user.role = result.data.roles[0]
+            this.user.adresse = result.data.adresse
             localStorage.setItem('x-access-token', result.data.accessToken)
             axios.defaults.headers.common['x-access-token'] = localStorage.getItem('x-access-token')
         }, error => {
