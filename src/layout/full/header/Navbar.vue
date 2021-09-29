@@ -40,6 +40,15 @@
           <vs-dropdown-item href="#/mycard">Consulter</vs-dropdown-item>
         </vs-dropdown-menu>
       </vs-dropdown>
+      <vs-dropdown vs-trigger-click left class="cursor-pointer pr-2 pl-2 ml-1 mr-1">
+        <a v-if="!auth.isAdminOrManager()" class="text-white-dark mr-4" >
+          <vs-icon icon="toll"></vs-icon>
+          <div class="cart_count mr-4"><span> {{GCbalance}} </span></div>
+        </a>
+        <vs-dropdown-menu class="topbar-dd">
+          <vs-dropdown-item>Vous avez un sold de {{GCbalance}} GreenCoins. </vs-dropdown-item>
+        </vs-dropdown-menu>
+      </vs-dropdown>
       <!---
       Craete new dd
       -->
@@ -83,7 +92,10 @@ export default {
     },
     cardCount:{
       type : Number
-    }
+    },
+    GCbalance:{
+      type : Number
+    },
   },
   data: () => ({
     indexActive: 0,

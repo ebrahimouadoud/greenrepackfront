@@ -3,6 +3,7 @@
     <!---Navigation-->
     <Navbar
       :cardCount="cardCount"
+      :GCbalance="GCbalance"
       :topbarColor="topbarColor"
       :logo="require('@/assets/images/logo/logo-light-icon.png')"
       :title="logotitle"
@@ -34,14 +35,23 @@ export default {
     logotitle: "Green Repack",
     sidebarLinks: sidebarLinks,
     cardCount: 0,
-    auth: auth
+    auth: auth,
+    GCbalance: 0
   }),
   mounted(){
     if( ! this.auth.isAdminOrManager() ){
       this.loadMyCart()
+      this.gerMyGCBalance()
     }
   },
   methods: {
+    gerMyGCBalance(){
+      axios.get('mybalance')
+        .then(res=>{
+            this.GCbalance = res.data.balance
+            console.log('res.data.balance ',res.data.balance)
+        })
+    },
     loadMyCart(){
       console.log( 'MAIN  this.$parent.loadMyCart()' )
       axios.get('card/me')

@@ -1,10 +1,10 @@
 <template>
     <div class="container-fluid">
         <div>
-            <brc :name="'Revente'" 
+            <brc :name="'Mes commandes'" 
                 :crlink="'#/resall/new'"
-                :ope="'Mes reventes'" 
-                :showbtn="true">
+                :ope="'Consulter'" 
+                :showbtn="false">
             </brc>
         </div>
 

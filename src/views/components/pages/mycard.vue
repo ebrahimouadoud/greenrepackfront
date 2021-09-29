@@ -159,6 +159,8 @@ export default {
                             "success")
                         this.productsCollectins = []
                         this.$parent.loadMyCart()
+                        this.$parent.gerMyGCBalance()
+                        this.$router.push('/myorders')
                 }, err=> {
                     swal("Erreur!", 
                         "une erreur est survenue veuillez réessayer ultérieurement!",
