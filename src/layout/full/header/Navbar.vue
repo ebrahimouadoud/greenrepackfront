@@ -28,34 +28,16 @@
       
 
       <vs-spacer></vs-spacer>
-
       <!---
       Craete new dd
       -->
       <vs-dropdown vs-trigger-click left class="cursor-pointer pr-2 pl-2 ml-1 mr-1">
-        <a class="text-white-dark" href="#">
-          <vs-icon icon="notifications"></vs-icon>
-        </a>
-        <vs-dropdown-menu class="topbar-dd">
-          <vs-dropdown-item>Action</vs-dropdown-item>
-          <vs-dropdown-item>Another Action</vs-dropdown-item>
-          <vs-dropdown-item>Something</vs-dropdown-item>
-          <vs-dropdown-item>Here</vs-dropdown-item>
-        </vs-dropdown-menu>
-      </vs-dropdown>
-      <!---
-      Craete new dd
-      -->
-      <vs-dropdown vs-trigger-click left class="cursor-pointer pr-2 pl-2 ml-1 mr-1">
-        <a class="text-white-dark mr-4" href="#">
+        <a class="text-white-dark mr-4" >
           <vs-icon icon="shopping_cart"></vs-icon>
           <div class="cart_count mr-4"><span> {{cardCount}} </span></div>
         </a>
         <vs-dropdown-menu class="topbar-dd">
-          <vs-dropdown-item>Action</vs-dropdown-item>
-          <vs-dropdown-item>Another Action</vs-dropdown-item>
-          <vs-dropdown-item>Something</vs-dropdown-item>
-          <vs-dropdown-item>Here</vs-dropdown-item>
+          <vs-dropdown-item href="#/mycard">Consulter</vs-dropdown-item>
         </vs-dropdown-menu>
       </vs-dropdown>
       <!---
@@ -106,7 +88,8 @@ export default {
   data: () => ({
     indexActive: 0,
     showToggle: false,
-    search: ""
+    search: "",
+    auth: auth
   }),
   mounted(){
   },

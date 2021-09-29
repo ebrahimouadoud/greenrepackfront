@@ -20,73 +20,79 @@ export default new Router({
                 {
                     path: '/starterkit',
                     name: 'Starterkit',
-                    index: 1,
+                    index: 41,
                     component: () => import('./views/StarterPage.vue')
                 },{
                     path: '/users',
                     name: 'users',
-                    index: 2,
+                    index: 41,
                     component: () => import('./views/components/pages/users-manage.vue')
                 },
                 //store
                 {
                     path: '/store',
                     name: 'store',
-                    index: 2,
+                    index: 40,
                     component: () => import('./views/components/pages/store.vue')
+                },
+                {
+                    path: '/mycard',
+                    name: 'mycard',
+                    index: 39,
+                    component: () => import('./views/components/pages/mycard.vue')
                 },
                 {
                     path: '/user/create',
                     name: 'usercreate',
-                    index: 2,
+                    index: 38,
                     component: () => import('./views/components/pages/user-create.vue')
                 },{
                     path: '/user/edit/:id',
                     name: 'useredite',
-                    index: 2,
+                    index: 37,
                     component: () => import('./views/components/pages/user-create.vue')
                 },{
                     path: '/products',
                     name: 'products',
-                    index: 2,
+                    index: 36,
                     component: () => import('./views/components/pages/products-manage.vue')
                 },{
                     path: '/resalls',
                     name: 'resalls',
-                    index: 2,
+                    index: 35,
                     component: () => import('./views/components/pages/resalls-manage.vue')
                 },{
                     path: '/catalogue',
                     name: 'catalogue',
-                    index: 2,
+                    index: 34,
                     component: () => import('./views/components/pages/catalogue.vue')
                 },{
                     path: '/token/verify/:tkn',
                     name: 'tokenverify',
-                    index: 2,
+                    index: 33,
                     component: () => import('./views/components/Login/token-validation.vue')
                 }//Resalls
                 ,{
                     path: '/myresalls',
                     name: 'myresalls',
-                    index: 2,
+                    index: 32,
                     component: () => import('./views/components/pages/user-resalle-manage.vue')
                 }
                 ,{
                     path: '/resall/new',
                     name: 'newresall',
-                    index: 2,
+                    index: 31,
                     component: () => import('./views/components/pages/new-resall.vue')
                 }
                 ,{
                     path: '/avatar',
                     name: 'Avatar',
-                    index: 3,
+                    index: 31,
                     component: () => import('./views/components/vuesax/avatar/avatar.vue')
                 },{
                     path: '/alert',
                     name: 'Alert',
-                    index: 3,
+                    index: 30,
                     component: () => import('./views/components/vuesax/alert/alert.vue')
                 },{
                     path: '/breadcrumb',
