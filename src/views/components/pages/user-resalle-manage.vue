@@ -24,7 +24,12 @@
                     </div>
                 </template>
                 <template v-slot:cell(prixPropose)="data">
-                    {{ data.item.prixPropose + "€" }}
+                    <div v-if="data.item.prixPropose">
+                        {{ data.item.prixPropose + "€" }}
+                    </div>
+                    <div v-else>
+                        <span style="border-radius: 0px;" class="label label-warning">En attente</span>
+                    </div>
                 </template>
                 <template v-slot:cell(createdAt)="data">
                     {{ data.item.createdAt | formatDate }}
@@ -48,18 +53,21 @@
                 </b-table>    
                 <vs-popup title="Gérer votre revente" :active.sync="managingResall">
                     <div v-if="managingResall">
-                        <vs-alert v-if="resallOnManage.etat=='En Attendant'"  title="En Attente" active="true" color="warning" class="mb-3">
+                        <vs-alert v-show="resallOnManage.etat=='En Attendant' && resallOnManage.prixPropose"  title="En Attente" active="true" color="warning" class="mb-3">
                             La revente est en attente vous pouvez accepté ou refuser.
                         </vs-alert>
-                        <vs-alert v-if="resallOnManage.etat=='CO'"  title="En Attente" active="true" color="warning" class="mb-3">
+                        <vs-alert v-show="resallOnManage.etat=='En Attendant' && !resallOnManage.prixPropose"  title="En Attente de proposition" active="true" color="warning" class="mb-3">
+                            La revente va être valeurisée par un de nos agents.
+                        </vs-alert>
+                        <vs-alert v-if="resallOnManage.etat=='CO' && resallOnManage.prixPropose"  title="En Attente" active="true" color="warning" class="mb-3">
                             Après la vérification du produit, Green repack vous propose une contre offre à {{resallOnManage.prixPropose}}€.
                             Si vous refuser la contre offre, vous allez devoir payer les frais de retour de votre produit.
                         </vs-alert>
-                        <div v-if="resallOnManage.etat=='CO'" >
+                        <div v-if="resallOnManage.etat=='CO' == resallOnManage.prixPropose" >
                             <vs-button @click="acceptCounterOffer()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="proceedRefuseCO()" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
-                        <div v-if="resallOnManage.etat=='En Attendant'" >
+                        <div v-if="resallOnManage.etat=='En Attendant' && resallOnManage.prixPropose" >
                             <vs-button @click="proceedAccept()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="refuseResall(resallOnManage.id)" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
@@ -68,6 +76,11 @@
                                 Vous avez accepté la revente, vous allez être informé lors de la récéption.
                             </vs-alert>
                         </p>
+                    </div>
+                    <div v-else>
+                         <vs-alert title="Accepté" active="true" color="rgb(41, 147, 138)" class="mb-3">
+                                Vous avez accepté la revente, vous allez être informé lors de la récéption.
+                            </vs-alert>
                     </div>
                     <vs-popup classContent="popup-example" title="Vos Informations Bancaires" :active.sync="accepting">
                         <vs-input :danger="$v.bic.$error" class="inputx mb-4 col-11" placeholder="BIC" v-model="bic"/>

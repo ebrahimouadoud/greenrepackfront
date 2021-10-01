@@ -33,11 +33,6 @@
               <span class="hide-in-minisidebar">Catalogue</span>
             </vs-sidebar-item>
         </template>
-        <template v-for="(sidebarLink, index) in sidebarLinks" >
-            <vs-sidebar-item :icon="sidebarLink.icon" :to="sidebarLink.url" :key="`sidebarLink-${index}`" :index="index">
-              <span class="hide-in-minisidebar">{{ sidebarLink.name }}</span>
-            </vs-sidebar-item>
-        </template>  
 
     </vs-sidebar>
     <vs-sidebar v-else default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >
@@ -67,11 +62,6 @@
               <span class="hide-in-minisidebar"></span>
             </vs-sidebar-item>
         </template>
-        <template v-for="(sidebarLink, index) in sidebarLinks" >
-            <vs-sidebar-item :icon="sidebarLink.icon" :to="sidebarLink.url" :key="`sidebarLink-${index}`" :index="index">
-              <span class="hide-in-minisidebar">{{ sidebarLink.name }}</span>
-            </vs-sidebar-item>
-        </template>  
 
     </vs-sidebar>
   </div>

@@ -82,13 +82,13 @@ export default {
             if (error.response.status == 404) {
                 swal({
                     title: "Accès refusé",
-                    text: error.response.data.detail,
+                    text: error.response.data.message,
                     icon: "error"
                 }).then()
             } else if (error.response.status == 401) {
                 swal({
                     title: "Accès refusé",
-                    text: error.response.data.detail,
+                    text: error.response.data.message,
                     icon: "error"
                 }).then()
             } else if (error.response.status == 400) {

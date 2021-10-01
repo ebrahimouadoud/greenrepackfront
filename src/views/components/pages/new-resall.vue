@@ -92,8 +92,8 @@
                     <label for="" class="vs-input--label">Sim débloqué ? </label>
                     <div class="vs-con-input">
                         <b-form-select class="vs-inputx vs-input--input normal"
-                            :class="{ 'is-invalid' : $v.phone.sim_lock.$error }" 
-                            :options='[{value: 1, text: "Oui"}, {value: 0, text: "Non"} ]' v-model="phone.sim_lock">
+                            :class="{ 'is-invalid' : $v.phone.simBlocked.$error }" 
+                            :options='[{value: 1, text: "Oui"}, {value: 0, text: "Non"} ]' v-model="phone.simBlocked">
                             <b-form-select-option :value="null">Choisissez</b-form-select-option>
                         </b-form-select>
                     </div>
@@ -138,7 +138,7 @@ export default {
             phone: {
                 state_screen: null,
                 state_body:null,
-                sim_lock:null,
+                simBlocked:null,
                 storage:null,
             }
         }
@@ -191,6 +191,7 @@ export default {
                 if(this.selectedType.name == 'téléphone' ){
                     _stt = this.phone
                 }
+                this.phone.storage = parseInt(this.phone.storage)
                 axios.
                     post('resall/create', {
                             modeleId: this.selectedModel,
@@ -200,11 +201,16 @@ export default {
                             age: 36
                     } ).then( res => {
                         console.log(res.data.revente.prixPropose)
-                        swal("Revente enregistré!",
+                        if(res.data.revente.prixPropose){
+                            swal("Revente enregistré!",
                                 "Nous vous proposont " + res.data.revente.prixPropose + "€ pour cet revente, vous pouvez accepter ou refuser notre proposition sur la liste de vos reventes.",
                                 "success");
-                            console.log(res)
-                            this.$router.push('/myresalls')
+                        }else{
+                            swal("Revente enregistré!",
+                                "Nous n'avons pas de propositions pour votre revente, un agent va valueriser votre produit, et vous aller etre notifiés par mail.",
+                                "success");
+                        }
+                        this.$router.push('/myresalls')
                     }, err =>{
                         swal(   "Operation échoué!",
                                 "Merci de rééssayer ou contacter un administrateur.",
@@ -234,7 +240,7 @@ export default {
                 return this.selectedType.name == 'téléphone' }),
             state_body:requiredIf(function () {
                 return this.selectedType.name == 'téléphone' }),
-            sim_lock:requiredIf(function () {
+            simBlocked:requiredIf(function () {
                 return this.selectedType.name == 'téléphone' }),
             storage:requiredIf(function () {
                 return this.selectedType.name == 'téléphone' })
