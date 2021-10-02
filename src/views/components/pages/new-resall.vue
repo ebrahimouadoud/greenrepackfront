@@ -7,6 +7,9 @@
             </brc>
         </div>
         <vs-card>
+            <vs-alert v-if="!localisation" active="true">
+                Nous n'avons pas pu choisir un l'entrepot d'envoie, merci de vérifier votre adresse.
+            </vs-alert>
             <div class="default-input d-flex align-items-center mb-4">
                 <div class="col-1"></div>
                 
@@ -135,6 +138,7 @@ export default {
             selectedModel: null,
             color: null,
             age: null,
+            localisation: null,
             phone: {
                 state_screen: null,
                 state_body:null,
@@ -162,6 +166,7 @@ export default {
                  console.log( 'REs : ', res.data.rows)
                 this.typesCollection = res.data.rows
             })
+        this.findNearWearHouse()
     },
     methods: {
         loadBrands(){
@@ -178,6 +183,14 @@ export default {
                     console.log( 'REs MODELS : ', res.data.rows)
                     this.modelsCollection = res.data.rows
                     console.log('modelsCollection ', this.modelsCollection)
+                })
+        },
+        findNearWearHouse(){
+            axios.get('warehouses/getnear')
+                .then( res=> {
+                    console.log(' ::: findNearWearHouse ::: ', res.data.warehouse.id)
+                    console.log(' ::: findNearWearHouse ::: ', res.data.warehouse)
+                    this.localisation = res.data.warehouse.id
                 })
         },
         saveResall(){
@@ -198,7 +211,8 @@ export default {
                             state: this.phone,
                             description: "any",
                             color: this.color,
-                            age: 36
+                            age: 36,
+                            localisation: this.localisation
                     } ).then( res => {
                         console.log(res.data.revente.prixPropose)
                         if(res.data.revente.prixPropose){

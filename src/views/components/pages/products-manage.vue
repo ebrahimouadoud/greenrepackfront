@@ -54,7 +54,12 @@
                     </div>
                 </template>
                 <template v-slot:cell(prixPropose)="data">
-                    {{ data.item.revente.prixPropose + "€" }} 
+                    <div v-if="data.item.revente.prixPropose">
+                        {{ data.item.revente.prixPropose + "€" }}
+                    </div>
+                    <div v-else>
+                        <span style="border-radius: 0px;" class="label label-warning">En attente</span>
+                    </div> 
                 </template>
                 <template v-slot:cell(phase)="data">
                     
@@ -76,7 +81,10 @@
                         color="success" type="border" icon="local_offer">
                         Vendre
                     </vs-button>
-                    
+                    <button type="button" style="border-radius: 5%;" class="btn btn-info " 
+                        @click="checkProduct(data.item)"
+                        ><i class="ti-eye"></i>Consulter
+                    </button>
                 </template>
                 </b-table>
                 <vs-popup title="Gérer votre revente" :active.sync="salingProduct">
@@ -150,6 +158,9 @@
                         </div>
                     
                 </vs-popup>
+                <vs-popup title="Détails du produit" :active.sync="showingProduct">
+                    <prdcard v-if="showingProduct" :product="productOnShow"></prdcard>
+                </vs-popup>
                 <div class="mt-3">
                     <b-pagination
                         v-model="c_Page"
@@ -166,18 +177,21 @@
 import ThemifyIcon from "vue-themify-icons";
 import brc from '../custom/breadc.vue'
 import axios from 'axios';
+import prdcard from './product-card.vue'
 import { required, email, sameAs, minLength, requiredUnless, requiredIf } from 'vuelidate/lib/validators'
 /* eslint-disable */
 export default {
     components: {
         ThemifyIcon,
-        brc
+        brc,
+        prdcard
     },
     data(){
         return{
             fields: [ {label: "Titre", key :"name"  },
                     {label: "Modèle", key: "modele.name" },
                     {label: "Marchand", key: "user.email" },
+                    {label: "Entrepot", key: "entrepot.name" },
                     {label: "Valeur (A)", key: "prixPropose" },
                     {label: "Phase", key: "phase" },
                         "Actions"],
@@ -190,10 +204,16 @@ export default {
             productToSale: null,
             salingProduct: false,
             prixDeVente: null, 
-            nameDeVente: null
+            nameDeVente: null,
+            showingProduct: false,
+            productOnShow: null
         }
     },
     methods:{
+        checkProduct(prd){
+            this.showingProduct = true
+            this.productOnShow = prd
+        },
         loadData(ctx, callback){
             console.log("loading")
             
