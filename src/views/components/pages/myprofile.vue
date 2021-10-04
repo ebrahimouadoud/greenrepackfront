@@ -27,18 +27,30 @@
             <vs-popup classContent="popup-example" title="Nouveau mot de passe" :active.sync="changingPasswd">
                 
                 <vs-input class="inputx mb-4" type="password" placeholder="Votre nouveau mot de passe" v-model="pass"/>
-                
                 <vs-button @click="changePassword" class="mt-4" color="primary" type="filled">
-                    Changer votre adresse
+                    Changer votre mot de passe
                 </vs-button>
             </vs-popup>
 
             <vs-popup classContent="popup-example" title="Nouvelle adresse" :active.sync="changingAdress">
                 
-                <vs-input class="inputx mb-4 col-7" type="text" placeholder="Votre nouvelle adresse" v-model="newAdress"/>
+                <div class="row mb-4">
+                    <vs-input class="inputx ml-4 mr-3 col-7" type="text" placeholder="Votre nouvelle adresse" v-model="newAdress"/>
+                    <vs-button @click="verifyAdress" class=" col-2" color="success" type="filled">
+                        Vérifier
+                    </vs-button>
+                </div>
                 
-                <vs-button @click="changeAdress" class="mt-4" color="primary" type="filled">
-                    Changer votre mot de passe
+                <div v-if="formattedAdress" style="border-radius: 155px;" class="alert alert-success alert-rounded alert-dismissible"> 
+                    <i class="ti-check"></i> {{formattedAdress}}
+                </div>
+
+                <div v-if="notValidAdresse" style="border-radius: 155px;" class="alert alert-danger alert-rounded alert-dismissible"> 
+                    <i class="ti-close"></i> Adresse non valide.
+                </div>
+
+                <vs-button :disabled="!formattedAdress" @click="changeAdress" class="mt-4" color="primary" type="filled">
+                    Changer votre adresse
                 </vs-button>
             </vs-popup>
             
@@ -59,10 +71,25 @@ export default {
             changingPasswd: false,
             pass: null,
             changingAdress: false,
-            newAdress: null
+            newAdress: null,
+            formattedAdress: null,
+            notValidAdresse: false
         }
     },
     methods: {
+        verifyAdress(){
+            if( ! this.newAdress  ){
+            }else{
+                axios.get('checkadresse?adresse=' + this.newAdress)
+                    .then( res => {
+                        console.log(res.data)
+                        this.formattedAdress = res.data
+                        this.newAdress = res.data
+                    }, err => {
+                        this.notValidAdresse = true
+                    } )
+            }
+        },
         changeAdress(){
             if( ! this.newAdress  ){
                 swal({

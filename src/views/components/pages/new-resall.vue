@@ -111,7 +111,7 @@
             </div>
             <div class="default-input d-flex align-items-center mb-4">
                 <div class="col-2"></div>
-                <vs-button @click="saveResall()" color="success" icon="save">Enregistrer</vs-button>
+                <vs-button @click="saveResall()" :disabled="!localisation" color="success" icon="save">Enregistrer</vs-button>
             </div>
         </vs-card>
     </div>
@@ -144,7 +144,8 @@ export default {
                 state_body:null,
                 simBlocked:null,
                 storage:null,
-            }
+            },
+            geocoder: null
         }
     },
     watch:{
@@ -188,8 +189,6 @@ export default {
         findNearWearHouse(){
             axios.get('warehouses/getnear')
                 .then( res=> {
-                    console.log(' ::: findNearWearHouse ::: ', res.data.warehouse.id)
-                    console.log(' ::: findNearWearHouse ::: ', res.data.warehouse)
                     this.localisation = res.data.warehouse.id
                 })
         },
