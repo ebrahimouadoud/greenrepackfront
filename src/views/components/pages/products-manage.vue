@@ -301,6 +301,7 @@ export default {
             //product/notifyarrival/
             axios.post('/product/notifyarrival/' + id )
                 .then(result =>{
+                        this.loadData()
                         this.$refs.productsList.refresh();
                         swal("Récéption enregistré",
                                 "Le marchand est notifié par mail, et sms.",
@@ -311,7 +312,8 @@ export default {
                                 "error");
                     }
                 )
-            this.$refs.productsList.refresh();
+            //this.loadData()
+            //this.$refs.productsList.refresh();
         },
         putProductOnSale(){
             axios.post('/product/sale/' + this.productToSale.id , {
@@ -319,6 +321,7 @@ export default {
                 name : this.nameDeVente
             } )
                 .then(result =>{
+                        this.loadData()
                         this.$refs.productsList.refresh();
                         this.salingProduct = false
                         this.productToSale = null
@@ -333,37 +336,14 @@ export default {
                                 "error");
                     }
                 )
-            this.$refs.productsList.refresh();
+            //this.loadData()
+            //this.$refs.productsList.refresh();
         },
         filter(){
-            //selectedWarehouse: null,
-            //selectedPhase: null,
-            //selectedType: null,
-            //titre: null
+            
             this.loadData()
-            /*this.$refs.productsList.refresh();
-            let query = ''
-            if(this.search.titre)
-                query+= "?titre=" + this.search.titre
-            if(this.search.selectedType)
-                query = query.length > 0 ? query + "&type=" + this.search.selectedType.id  : query + "?type=" + this.search.selectedType.id
-            if(this.search.selectedPhase)
-                query = query.length > 0 ? query + "&phase=" + this.search.selectedPhase : query + "?phase=" + this.search.selectedPhase
-            if(this.search.selectedWarehouse)
-                query = query.length > 0 ? query + "&warehouse=" + this.search.selectedWarehouse.id :  "?warehouse=" + this.search.selectedWarehouse.id
-            //
-            //
-            axios.get('/products/all' + query )
-            .then( result => {
-                console.log(result)
-                this.tRows = result.data.Products.length
-                //callback(result.data.Products)
-                this.isBusy = false
-            }, error =>{
-                swal("Erreur!",
-                        "Une erreur est survenue, veuillez contacter un administrateur",
-                        "error");
-            }  )*/
+            this.$refs.productsList.refresh();
+            
         },
     },
     validations: {

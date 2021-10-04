@@ -111,6 +111,7 @@ export default {
       this.$store.commit("IS_SIDEBAR_ACTIVE", true);
     },
     logout(){
+      this.$router.push('/starterkit')
       console.log(' LOGOUT ')
       this.auth.logout()
     }

@@ -10,30 +10,39 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-12 col-md-9">
+                    <div class="col-sm-12 col-md-2 ml-4">
                         <div class="dataTables_length" id="example_length">
-                            <label>Nombre d'elements par page: 
-                                <select name="example_length" 
-                                    v-model="p_Page" class="form-control form-control-sm">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </label>
+                            <label> Type :  </label>
+                            <div class="vs-con-input">
+                                <b-form-select class="vs-inputx vs-input--input normal" v-model="search.selectedType">
+                                    <b-form-select-option :value="null">Choisir le type</b-form-select-option>
+                                    <option v-for="option in typesCollection" :value="option" :key="option.id">
+                                        {{ option.name }}
+                                    </option>
+                                </b-form-select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-sm-12 col-md-2 ml-3">
                         <div id="example_filter" class="dataTables_filter">
-                            <label>Recherche:
-                                <input type="search" 
-                                    class="form-control form-control-sm" 
-                                    placeholder="nom"
-                                    v-model="search"
-                                >
+                            <label>Titre:
                             </label>
-                            <button type="button" @click="filter" class="btn btn-secondary">
+                            <input type="search" 
+                                    class="form-control form-control-sm" 
+                                    placeholder="Titre"
+                                    v-model="search.titre"
+                                >
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-1 ml-5">
+                        <div id="example_filter" class="dataTables_filter">
+                            <label>Filtrer:
+                            <button type="button" @click="filter" 
+                                class="btn mt-2 ml-2 btn-secondary ">
                                 <ThemifyIcon icon="search" /> 
                             </button>
+                            </label>
+                            
                         </div>
                     </div>
                 </div>
@@ -101,27 +110,46 @@ export default {
             salingProduct: false,
             prixDeVente: null, 
             nameDeVente: null,
-            productsCollection: []
+            productsCollection: [],
+            typesCollection:[],
+            search:{
+                selectedType: null,
+                titre: null
+            },
         }
     },
     mounted(){
         this.loadData()
+        axios.
+            get('/categories/all').then( res => {
+                 console.log( 'REs : ', res.data.rows)
+                this.typesCollection = res.data.rows
+            })
     },
     methods:{
         loadData(){
             console.log("loading")
-            
-            axios.get('/products/all' )
-            .then( result => {
-                console.log(result.data.Products)
-                this.productsCollection = result.data.Products
-                this.tRows = result.data.Products.length
-                this.isBusy = false
-            }, error =>{
-                swal("Erreur!",
-                        "Une erreur est survenue, veuillez contacter un administrateur",
-                        "error");
-            }  )
+            let query = ''
+            if(this.search.titre)
+                query+= "?titre=" + this.search.titre
+            if(this.search.selectedType)
+                query = query.length > 0 ? query + "&type=" + this.search.selectedType.id  : query + "?type=" + this.search.selectedType.id
+            if(this.search.selectedPhase)
+                query = query.length > 0 ? query + "&phase=" + this.search.selectedPhase : query + "?phase=" + this.search.selectedPhase
+            if(this.search.selectedWarehouse)
+                query = query.length > 0 ? query + "&warehouse=" + this.search.selectedWarehouse.id :  "?warehouse=" + this.search.selectedWarehouse.id
+
+            axios.get('/products/all' + query )
+                .then( result => {
+                    console.log(result.data.Products)
+                    this.productsCollection = result.data.Products
+                    this.tRows = result.data.Products.length
+                    this.isBusy = false
+                }, error =>{
+                    swal("Erreur!",
+                            "Une erreur est survenue, veuillez contacter un administrateur",
+                            "error");
+                }  )
             
         },
         addProductToCard(id){
@@ -159,8 +187,7 @@ export default {
                 )
         },
         filter(){
-            this.tSearch = this.search
-            this.c_Page = 1
+            this.loadData()
         },
     },
     validations: {
