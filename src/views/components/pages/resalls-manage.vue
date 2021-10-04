@@ -10,9 +10,43 @@
 
         <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 ml-3">
+                        <div class="dataTables_length" id="example_length">
+                            <label> Status :  </label>
+                            <div class="vs-con-input">
+                                <b-form-select :options="etatsCollection" class="vs-inputx vs-input--input normal" v-model="search.selectedEtat">
+                                    <b-form-select-option :value="null">Choisir le status</b-form-select-option>
+                                </b-form-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 ml-3">
+                        <div id="example_filter" class="dataTables_filter">
+                            <label>Marchand:
+                            </label>
+                            <input type="search" 
+                                    class="form-control form-control-sm" 
+                                    placeholder="Adresse mail"
+                                    v-model="search.usermail"
+                                >
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-1 ml-5">
+                        <div id="example_filter" class="dataTables_filter">
+                            <label>Filtrer:
+                            <button type="button" @click="filter" 
+                                class="btn mt-2 ml-2 btn-secondary ">
+                                <ThemifyIcon icon="search" /> 
+                            </button>
+                            </label>
+                            
+                        </div>
+                    </div>
+                </div>
                 <b-table
                     ref="resalls"
-                    :items="loadData"
+                    :items="resallsCollection"
                     :busy="isBusy"
                     :fields="fields"
                     class="mt-3"
@@ -189,6 +223,7 @@ export default {
                     {label: "Date et heure", key: "createdAt" },
                     {label: "Prix", key :"prixPropose"  },
                     {label: "Status", key: "etat" },
+                    {label: "Marchand", key: "user.email" },
                         "Gérer"],
             isBusy: false,
             proposition: null,
@@ -197,11 +232,21 @@ export default {
             resallOnManage: null,
             makingCounterOffer: false,
             showingProduct: false,
-            productOnShow: null
+            productOnShow: null,
+            resallsCollection: [],
+            etatsCollection: [
+                                'En Attendant', 'Validé', 'CO' , 
+                                'Refusé', 'Accepté'
+                            ],
+            search:{
+                selectedEtat: null,
+                usermail: null
+            },
+
         }
     },
     mounted(){
-        //this.loadData()
+        this.loadData()
     },
     watch:{
         managingResall: function (val, newVal) {
@@ -216,13 +261,20 @@ export default {
         proceedAccept(){
             this.makingCounterOffer = true
         },
-        loadData(ctx, callback){
+        loadData(){
             console.log("loading")
-            axios.get('/resall/all' )
+
+            let query = ''
+            if(this.search.selectedEtat)
+                query+= "?etat=" + this.search.selectedEtat
+            if(this.search.usermail)
+                query = query.length > 0 ? query + "&usermail=" + this.search.usermail  : query + "?usermail=" + this.search.usermail
+            
+            axios.get('/resall/all' + query )
             .then( result => {
                 console.log(result.data.Resall)
                 this.tRows = result.data.total
-                callback(result.data.Resall)
+                this.resallsCollection = result.data.Resall
             }, error =>{
                 this.managingResall = false
                 this.makingCounterOffer = false
@@ -308,6 +360,9 @@ export default {
                         }
                     )
             }
+        },
+        filter(){
+            this.loadData()
         },
         acceptResall(){
             this.$v.$touch()
