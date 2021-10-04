@@ -55,7 +55,7 @@
             <vs-popup class="holamundo" title="Payer ma commande" :active.sync="payingCommand">
                 <div class="card">
                     <div class="card-body">
-                        <div v-if="payingCommand" class="col-md-12">
+                        <div v-if="payingCommand && !loadingPay" class="col-md-12">
                             <div>
                                 <div class="form-group input-group m-t-40" :class="{ 'input-icon-validate-danger' : $v.exp_month.$error }">
                                     <vs-input icon="credit_card" :danger="$v.cardnum.$error" class="inputx mb-4 col-11" placeholder="Numéro de la carte" v-model="cardnum"/>
@@ -92,6 +92,10 @@
                                 <button @click="payeCard" class="btn btn-info text-white">Payer</button>
                             </div>
                         </div>
+                        <div v-else-if="loadingPay" class="text-center text-danger my-2">
+                            <b-spinner class="align-middle"></b-spinner>
+                            <strong>Payement en cours ... </strong>
+                        </div>
                     </div>
                 </div>
                 
@@ -116,7 +120,8 @@ export default {
             cardnum: null,
             exp_month: null,
             exp_year: null,
-            cvc: null
+            cvc: null,
+            loadingPay: false
         }
     },
     mounted(){
@@ -146,6 +151,7 @@ export default {
         payeCard(){
             this.$v.$touch()
             if(!this.$v.$invalid){
+                this.loadingPay = true
                 axios.post('orders/create', {
                     number: this.cardnum,
                     exp_month: this.exp_month,
@@ -154,6 +160,7 @@ export default {
                     adresse: this.adresse
                 }).then(res => {
                         this.payingCommand = false
+                        this.loadingPay = false
                         swal("Paiement réussi!", 
                             "Votre commande à bien été enregistrée, une facture vous est envoyé par mail!",
                             "success")
@@ -162,6 +169,8 @@ export default {
                         this.$parent.gerMyGCBalance()
                         this.$router.push('/myorders')
                 }, err=> {
+                    this.payingCommand = false
+                    this.loadingPay = false
                     swal("Erreur!", 
                         "une erreur est survenue veuillez réessayer ultérieurement!",
                         "error")
