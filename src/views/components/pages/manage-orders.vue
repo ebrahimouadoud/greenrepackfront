@@ -79,7 +79,7 @@
                             <vs-alert  title="Commande a envoyer" active="true" color="warning" class="mb-3">
                                 Commande confirmé, renseignez le numéro de suivie pour confirmer l'envoie.
                             </vs-alert>
-                            <vs-input :danger="$v.tracking.$error"  class="inputx mb-4 col-11" placeholder="Numéro de la carte" v-model="tracking"/>
+                            <vs-input :danger="$v.tracking.$error"  class="inputx mb-4 col-11" placeholder="Numéro de suivie" v-model="tracking"/>
                             <vs-button v-if="orderOnManage.status=='Confirmé'"  @click="sendOrder(orderOnManage.id)" color="primary" type="filled">
                                 Envoyer
                             </vs-button>

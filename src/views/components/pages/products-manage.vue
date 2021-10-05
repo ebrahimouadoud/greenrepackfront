@@ -303,6 +303,7 @@ export default {
                 .then(result =>{
                         this.loadData()
                         this.$refs.productsList.refresh();
+                        this.loadData()
                         swal("Récéption enregistré",
                                 "Le marchand est notifié par mail, et sms.",
                                 "success");
@@ -360,5 +361,8 @@ export default {
 <style>
 .card {
     border-radius: 0;
+}
+.label {
+    border-radius: 100px;
 }
 </style>

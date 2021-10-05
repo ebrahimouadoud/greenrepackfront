@@ -10,83 +10,96 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Catalogue des types, marques, et models des produits</h4>
-                <div class="row">
-                    <div class="col-sm-12 col-md-9">
-                        <div class="dataTables_length" id="example_length">
-                            <label>Nombre d'elements par page: 
-                                <select name="example_length" 
-                                    v-model="p_Page" class="form-control form-control-sm">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-3">
-                        <div id="example_filter" class="dataTables_filter">
-                            <label>Recherche:
-                                <input type="search" 
-                                    class="form-control form-control-sm" 
-                                    placeholder="nom"
-                                    v-model="search"
-                                >
-                            </label>
-                            <button type="button" @click="filter" class="btn btn-secondary">
-                                <ThemifyIcon icon="search" /> 
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <b-table
-                    ref="userstab"
-                    :items="loadData"
-                    :busy="isBusy"
-                    :fields="fields"
-                    class="mt-3"
-                    :per-page="p_Page"
-                    :filter="tSearch"
-                    :current-page="c_Page"
-                    outlined>
-                <template v-slot:table-busy>
-                    <div class="text-center text-danger my-2">
-                    <b-spinner class="align-middle"></b-spinner>
-                    <strong>Chargement...</strong>
-                    </div>
-                </template>
-                <template v-slot:cell(created_at)="data">
-                    {{ data.item.created_at | formatDate }}
-                </template>
-                <template v-slot:cell(status)="data">
-                    
-                    <span v-if="data.item.status" class="label label-success">Activé</span>
-                    <span v-else class="label label-danger">Désactivé</span>
-                    
-                </template>
-                <template v-slot:cell(Actions)="data">
+                    <b-tabs card>
+                        <b-tab title="Types" active>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-9">
+                                    <div class="dataTables_length" id="example_length">
+                                        <label>Nombre d'elements par page: 
+                                            <select name="example_length" 
+                                                v-model="p_Page" class="form-control form-control-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-3">
+                                    <div id="example_filter" class="dataTables_filter">
+                                        <label>Recherche:
+                                            <input type="search" 
+                                                class="form-control form-control-sm" 
+                                                placeholder="nom"
+                                                v-model="search"
+                                            >
+                                        </label>
+                                        <button type="button" @click="filter" class="btn btn-secondary">
+                                            <ThemifyIcon icon="search" /> 
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <b-table
+                                ref="userstab"
+                                :items="loadData"
+                                :busy="isBusy"
+                                :fields="fields"
+                                class="mt-3"
+                                :per-page="p_Page"
+                                :filter="tSearch"
+                                :current-page="c_Page"
+                                outlined>
+                            <template v-slot:table-busy>
+                                <div class="text-center text-danger my-2">
+                                <b-spinner class="align-middle"></b-spinner>
+                                <strong>Chargement...</strong>
+                                </div>
+                            </template>
+                            <template v-slot:cell(created_at)="data">
+                                {{ data.item.created_at | formatDate }}
+                            </template>
+                            <template v-slot:cell(status)="data">
+                                
+                                <span v-if="data.item.status" class="label label-success">Activé</span>
+                                <span v-else class="label label-danger">Désactivé</span>
+                                
+                            </template>
+                            <template v-slot:cell(Actions)="data">
 
-                    <button type="button" class="btn btn-secondary btn-circle"
-                        @click="switchStatus(data.item.id)"
-                        ><i class="ti-key"></i> </button>
-                    <button type="button" class="btn btn-secondary btn-circle"
-                        @click="switchStatus(data.item.id)"
-                        ><i class="ti-lock"></i> </button>
-                    <button type="button" class="btn btn-secondary btn-circle" 
-                        @click="goEdit(data.item.id)"
-                        ><i class="ti-pencil-alt"></i> 
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-circle"  ><i class="ti-archive" ></i> </button>
-                    
-                </template>
-                </b-table>
-                <div class="mt-3">
-                    <b-pagination
-                        v-model="c_Page"
-                        :total-rows="tRows"
-                        :per-page="p_Page"
-                        aria-controls="my-table"
-                    ></b-pagination>
-                </div>
+                                <button type="button" class="btn btn-secondary btn-circle"
+                                    @click="switchStatus(data.item.id)"
+                                    ><i class="ti-key"></i> </button>
+                                <button type="button" class="btn btn-secondary btn-circle"
+                                    @click="switchStatus(data.item.id)"
+                                    ><i class="ti-lock"></i> </button>
+                                <button type="button" class="btn btn-secondary btn-circle" 
+                                    @click="goEdit(data.item.id)"
+                                    ><i class="ti-pencil-alt"></i> 
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-circle"  ><i class="ti-archive" ></i> </button>
+                                
+                            </template>
+                            </b-table>
+                            <div class="mt-3">
+                                <b-pagination
+                                    v-model="c_Page"
+                                    :total-rows="tRows"
+                                    :per-page="p_Page"
+                                    aria-controls="my-table"
+                                ></b-pagination>
+                            </div>
+                        </b-tab>
+                        <b-tab title="Marques">
+                            <b-card-text>Tab contents 2</b-card-text>
+                        </b-tab>
+                        <b-tab title="Modeles">
+                            <b-card-text>Tab contents 2</b-card-text>
+                        </b-tab>
+                        <b-tab title="Prix">
+                            <b-card-text>Tab contents 2</b-card-text>
+                        </b-tab>
+                    </b-tabs>
             </div>
         </div>
     </div>
@@ -102,12 +115,8 @@ export default {
     },
     data(){
         return{
-            fields: [ {label: "Nom complet", key :"name"  },
-                    {label: "Adresse mail", key: "email" },
-                    {label: "role", key: "role" },
-                    {label: "Créateur", key: "name" },
-                    {label: "Date de création", key: "created_at" },
-                    {label: "Status", key: "status" },
+            fields: [ {label: "Nom", key :"name"  },
+                    
                         "Actions"],
             c_Page: 1,
             p_Page: 5,
@@ -161,5 +170,9 @@ export default {
 <style>
 .card {
     border-radius: 0;
+}
+.nav-tabs .nav-link {
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
 }
 </style>

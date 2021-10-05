@@ -292,8 +292,7 @@ export default {
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
-                            this.$refs.resalls.refresh();
-                            this.$refs.resalls.refresh();
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -313,8 +312,7 @@ export default {
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
-                            this.$refs.resalls.refresh();
-                            this.$refs.resalls.refresh();
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -348,8 +346,7 @@ export default {
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
-                            this.$refs.resalls.refresh();
-                            this.$refs.resalls.refresh();
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -380,8 +377,7 @@ export default {
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
-                            this.$refs.resalls.refresh();
-                            this.$refs.resalls.refresh();
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -401,6 +397,7 @@ export default {
                         swal("",
                             "Acceptée.",
                             "success");
+                        this.loadData()
                         this.$refs.resalls.refresh();
                         this.managingResall = false
                         this.resallOnManage = null 

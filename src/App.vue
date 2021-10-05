@@ -42,3 +42,9 @@ export default {
   
 }
 </script>
+
+<style>
+.label {
+    border-radius: 100px;
+}
+</style>
