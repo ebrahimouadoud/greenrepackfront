@@ -34,6 +34,17 @@
                         Vous n'etes pas membre? <a @click="switchToRegister" class="text-info m-l-5"><b>S'inscrire</b></a>
                     </div>
                 </div>
+                <div class="form-group m-b-0">
+                    <div class="col-sm-12 text-center">
+                        Mot de passe oublié? <a @click="resetingPass = true" class="text-info m-l-5"><b>Recevez un nouveau</b></a>
+                    </div>
+                </div>
+                <vs-popup title="Recevez un nouveau mot de passe" :active.sync="resetingPass">
+                    <vs-input :danger="$v.email_newPass.$error"  class="inputx mb-4 col-11" placeholder="Votre adresse mail" v-model="email_newPass"/>
+                    <vs-button @click="getNewPass()" color="success" icon="save" type="filled">
+                        Envoyer
+                    </vs-button>
+                </vs-popup>
             </div>
         </div>
     </div>
@@ -42,7 +53,8 @@
 <script>
 /* eslint-disable */
 import auth from '../../../auth'
-
+import axios from 'axios'
+import { required, email } from 'vuelidate/lib/validators'
 export default {
     data() {
         return {
@@ -55,6 +67,8 @@ export default {
             logindropdown: false,
             username: "",
             password: "",
+            resetingPass: false,
+            email_newPass: null,
             valid: {
                 email: false,
                 password: false
@@ -69,7 +83,28 @@ export default {
         login(){
             console.log(' LOGIN : ', this.username, this.password)
             this.auth.login(this.username, this.password)
+        },
+        getNewPass(){
+            this.$v.$touch()
+            if(! this.$v.$invalid){
+                axios.get("getnewpass?email="+ this.email_newPass )
+                    .then(res=>{
+                        this.resetingPass = false
+                        swal("Enregistré!", 
+                            "Votre demande est enregistrée, vous allez recevoir un mail contenant votre nouveau mot de pass.",
+                            "success")
+                    }, error=> {
+                        swal("Erreur!", 
+                            "une erreur est survenue veuillez réessayer ultérieurement!",
+                            "error")
+                    })
+            }
         }
+    },
+    validations: {
+        email_newPass:{
+                required, email
+            }
     }
 }
 </script>
