@@ -142,31 +142,38 @@
                         </b-form-select>
                     </div>
                 </div>
-                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary" 
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.Processeur.$error }">
                     <label for="" class="vs-input--label">Processeur </label>
                     <div class="vs-con-input">
-                        <input :class="{ 'is-invalid' : $v.laptop.Processeur.$error }" class="vs-inputx vs-input--input normal" type="text"
+                        <input class="vs-inputx vs-input--input normal" type="text"
                              v-model="laptop.Processeur">
                         </div>
                 </div>
             </div>
             <div v-if="selectedModel && selectedType.name == 'ordinateur portable' " class="default-input d-flex align-items-center mb-4">
                 <div class="col-1"></div>
-                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.Taille_ecran.$error }"
+                >
                     <label for="" class="vs-input--label">Taille de l'écran </label>
                     <div class="vs-con-input">
-                        <input :class="{ 'is-invalid' : $v.laptop.Taille_ecran.$error }" class="vs-inputx vs-input--input normal" type="number"
-                             v-model="laptop.Taille_ecran">
+                        <input  class="vs-inputx vs-input--input normal" type="number"
+                            v-model="laptop.Taille_ecran">
                         </div>
                 </div>
-                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.RAM.$error }"
+                >
                     <label for="" class="vs-input--label">RAM (GO) </label>
                     <div class="vs-con-input">
-                        <input :class="{ 'is-invalid' : $v.laptop.RAM.$error }" class="vs-inputx vs-input--input normal" type="number"
+                        <input class="vs-inputx vs-input--input normal" type="number"
                              v-model="laptop.RAM">
                         </div>
                 </div>
-                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.storage.$error }"
+                >
                     <label for="" class="vs-input--label">Stockage (GO) </label>
                     <div class="vs-con-input">
                         <input :class="{ 'is-invalid' : $v.laptop.storage.$error }" class="vs-inputx vs-input--input normal" type="number"
@@ -280,7 +287,7 @@ export default {
                 if(this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' ){
                     _stt = this.phone
                 }
-                if(this.selectedType.name == 'téléphone'){
+                if(this.selectedType.name == 'ordinateur portable'){
                     _stt = this.laptop
                     console.log('this.laptop :: ', this.laptop)
                 }

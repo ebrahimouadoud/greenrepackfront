@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-12 col-md-8">
                 <div class="dataTables_length" id="example_length">
                     <label>Nombre d'elements par page: 
                         <select name="example_length" 
@@ -13,18 +13,20 @@
                     </label>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-3">
+            <div class="col-sm-12 col-md-2">
+                <div id="example_filter" class="dataTables_filter">
+                    <label>Filtrer: 
+                        <input type="text" v-model="tSearch" placeholder="Numéro de modele">
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-2">
                 <div id="example_filter" class="dataTables_filter">
                     <div id="example_filter" class="dataTables_filter">
-                    <button type="button" @click="addPrice()" class="btn btn-secondary">
+                    <button type="button" @click="addPrice()" class="btn mt-3 btn-secondary">
                         <ThemifyIcon icon="plus" />  Nouveau prix
                     </button>
                 </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-3">
-                <div id="example_filter" class="dataTables_filter">
-                    <input type="text" v-model="tSearch" placeholder="Numéro de modele">
                 </div>
             </div>
         </div>
@@ -121,6 +123,72 @@
                         </div>
                 </div>
             </div>
+            <div v-if="selectedModel && selectedModel.type.name == 'ordinateur portable' " class="default-input d-flex align-items-center mb-4">
+
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Etat</label>
+                    <div class="vs-con-input">
+                        <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.laptop.condition.$error }"
+                            :options='["comme_neuf", "bonne_état", "abimé", "cassé" ]' type="date" v-model="laptop.condition">
+                            <b-form-select-option :value="null">Choisissez</b-form-select-option>
+                        </b-form-select>
+                    </div>
+                </div>
+                
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Clavier</label>
+                    <div class="vs-con-input">
+                        <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.laptop.Clavier.$error }"
+                            :options='["AZERTY", "QWERTY" ]' v-model="laptop.Clavier">
+                            <b-form-select-option :value="null">Choisissez</b-form-select-option>
+                        </b-form-select>
+                    </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary" 
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.Processeur.$error }">
+                    <label for="" class="vs-input--label">Processeur </label>
+                    <div class="vs-con-input">
+                        <input class="vs-inputx vs-input--input normal" type="text"
+                             v-model="laptop.Processeur">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.Taille_ecran.$error }"
+                >
+                    <label for="" class="vs-input--label">Taille</label>
+                    <div class="vs-con-input">
+                        <input  class="vs-inputx vs-input--input normal" type="number"
+                            v-model="laptop.Taille_ecran">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.RAM.$error }"
+                >
+                    <label for="" class="vs-input--label">RAM (GO) </label>
+                    <div class="vs-con-input">
+                        <input class="vs-inputx vs-input--input normal" type="number"
+                             v-model="laptop.RAM">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary"
+                    :class="{ 'input-icon-validate-danger' : $v.laptop.storage.$error }"
+                >
+                    <label for="" class="vs-input--label">Stockage (GO) </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.laptop.storage.$error }" class="vs-inputx vs-input--input normal" type="number"
+                             v-model="laptop.storage">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-3 ml-4 vs-input-primary" 
+                    :class="{ 'input-icon-validate-danger' : $v.priceToAdd.$error }"
+                >
+                    <label for="" class="vs-input--label">Prix </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.priceToAdd.$error }" class="vs-inputx vs-input--input normal" type="number"
+                             v-model="priceToAdd">
+                        </div>
+                </div>
+            </div>
             
             <vs-button @click="savePrice()" color="success" icon="save" type="filled">
                 Envoyer
@@ -166,15 +234,18 @@ export default {
                 simBlocked:null,
                 storage:null,
             },
+            laptop: {
+                    storage: null,
+                    RAM: null,
+                    Taille_ecran: null,
+                    Processeur: null,
+                    Clavier: null,
+                    condition: null
+                },
         }
     },
     mounted() {
         this.loadPrices()
-    },
-    computed:{
-        isPhone(){
-            return this.selectedModel.type.name == 'téléphone'
-        }
     },
     methods:{
         addPrice(){
@@ -202,7 +273,34 @@ export default {
             console.log(this.$v)
             console.log( ' this.$v.$invalid ::: ', this.$v.$invalid)
             console.log( ' selectedModel ::: ', this.selectedModel.type)
-            console.log( 'selectedModel.type.name ', this.selectedModel.type.name, ' ==== ', this.selectedModel.type.name == 'téléphone' )
+            console.log( 'selectedModel.type.name ', this.selectedModel.type.name )
+            var _stt = null
+            if( this.selectedModel.type.name == 'téléphone' || this.selectedModel.type.name == 'tablette' ){
+                _stt = this.phone
+            }
+            if( this.selectedModel.type.name == 'ordinateur portable' ){
+                _stt = this.laptop
+            }
+            console.log( ' ::: _stt ::: ', _stt)
+            axios.post("/prices", {
+                    name: this.selectedModel.number,
+                    state: _stt,
+                    price: this.priceToAdd
+                })
+                .then(res => {
+                    swal("Enregistré !",
+                            "Le prix est enregistré avec succès.",
+                            "success");
+                    this.selectedModel = null
+                    this.priceToAdd = null
+                    this.addingPrice = false
+                    console.log( res)
+                }, err => {
+                    swal("Error !",
+                            "",
+                            "error");
+                } )
+            
         },
         saveNewPrice(pc){
             console.log(" :::: Price :::: " , pc )
@@ -249,17 +347,35 @@ export default {
             required
         },
         phone: {
-            state_screen:{ 
-                required: requiredIf(function () {
-                return this.selectedModel.type.name == 'téléphone' })},
-            state_body:
-                {required: requiredIf(function () {
-                return this.selectedModel.type.name == 'téléphone' })},
-            simBlocked:{ required: requiredIf(function () {
-                return this.selectedModel.type.name == 'téléphone' })},
-            storage:{required: requiredIf(function () {
-                return this.selectedModel.type.name == 'téléphone' })}
-        }
-    }
+            state_screen: {required : requiredIf(function () {
+                return this.selectedModel.type.name == 'téléphone' || this.selectedModel.type.name == 'tablette' })},
+            state_body:{ required : requiredIf(function () {
+                return this.selectedModel.type.name == 'téléphone' || this.selectedModel.type.name == 'tablette' })},
+            simBlocked:{required : requiredIf(function () {
+                return this.selectedModel.type.name == 'téléphone' || this.selectedModel.type.name == 'tablette' })},
+            storage:{required : requiredIf(function () {
+                return this.selectedModel.type.name == 'téléphone' || this.selectedModel.type.name == 'tablette' })}
+        },
+        laptop: {
+                storage: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })},
+                RAM: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })},
+                Taille_ecran: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })},
+                Processeur: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })},
+                Clavier: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })},
+                condition: {required: requiredIf(function () {
+                return this.selectedModel.type.name == 'ordinateur portable' })}
+            },
+    },
+    
 }
 </script>
+<style>
+.table th, .table td {
+    max-width: 400px;
+    }
+</style>
