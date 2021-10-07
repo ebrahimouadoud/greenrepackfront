@@ -94,7 +94,7 @@
                 </template>
                 <template v-slot:cell(phase)="data">
                     
-                    <span v-if="data.item.phase=='En Attend' && (data.item.revente.etat=='En Attendant' || data.item.revente.etat=='Accepté')" class="label label-warning">En attente</span>
+                    <span v-if="data.item.phase=='En attente' && (data.item.revente.etat=='En attente' || data.item.revente.etat=='Accepté')" class="label label-warning">En attente</span>
                     <span v-else-if="data.item.phase=='Renvoyé'" class="label label-danger">Renvoyé</span>
                     <span v-else-if="data.item.revente.etat=='Refusé'" class="label label-danger">Revente refusé</span>
                     <span v-else-if="data.item.phase=='Reçu'" class="label label-success">Reçu</span>
@@ -104,7 +104,7 @@
                 </template>
                 <template v-slot:cell(Actions)="data">
 
-                    <vs-button @click="notifyArrival(data.item.id)" v-if="data.item.phase=='En Attend' && data.item.revente.etat=='Accepté'" color="primary" type="border" icon="meeting_room">
+                    <vs-button @click="notifyArrival(data.item.id)" v-if="data.item.phase=='En attente' && data.item.revente.etat=='Accepté'" color="primary" type="border" icon="meeting_room">
                         Réçu
                     </vs-button>
                     <vs-button @click="notReturn(data.item.id)" v-if="data.item.revente.etat=='Refusé' && data.item.phase=='Reçu' " color="primary" type="border" icon="logout">
@@ -255,7 +255,7 @@ export default {
             showingProduct: false,
             productOnShow: null,
             typesCollection:[],
-            phasesCollection: ['En Attend', 'Reçu', 'Renvoyé', 'En vente', 'Vendu'],
+            phasesCollection: ['En attente', 'Reçu', 'Renvoyé', 'En vente', 'Vendu'],
             warehousesCollection: [],
             productsCollection: [],
             tracking: null,

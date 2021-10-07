@@ -32,6 +32,7 @@
                                 >
                         </div>
                     </div>
+                    <div class="col-6"></div>
                     <div class="col-sm-12 col-md-1 ml-5">
                         <div id="example_filter" class="dataTables_filter">
                             <label>Filtrer:
@@ -70,7 +71,7 @@
                 </template>
                 <template v-slot:cell(etat)="data">
                     
-                    <span v-if="data.item.etat=='En Attendant'" class="label label-warning">En attente</span>
+                    <span v-if="data.item.etat=='En attente'" class="label label-warning">En attente</span>
                     <span v-else-if="data.item.etat=='Validé'" class="label label-success">Validé</span>
                     <span v-else-if="data.item.etat=='Refusé'" class="label label-danger">Refusé</span>
                     <span v-else-if="data.item.etat=='Accepté'" class="label label-info">Accepté</span>
@@ -182,7 +183,7 @@
                                 color="rgb(3, 169, 243)" type="filled">Envoyer</vs-button>
                         </div>
                         <div v-if="resallOnManage.etat=='Accepté'" >
-                            <vs-button v-if="resallOnManage.produit.phase == 'En Attend' " @click="notifyArrival(resallOnManage.produit.id)" class="ml-5" color="warning" type="filled">
+                            <vs-button v-if="resallOnManage.produit.phase == 'En attente' " @click="notifyArrival(resallOnManage.produit.id)" class="ml-5" color="warning" type="filled">
                                 Acuser de reception
                             </vs-button>
                             <vs-button v-if="resallOnManage.produit.phase == 'Reçu' " @click="validateResall(resallOnManage.id)" class="ml-5" color="rgb(3, 169, 243)" type="filled">Valider</vs-button>
@@ -235,7 +236,7 @@ export default {
             productOnShow: null,
             resallsCollection: [],
             etatsCollection: [
-                                'En Attendant', 'Validé', 'CO' , 
+                                'En attente', 'Validé', 'CO' , 
                                 'Refusé', 'Accepté'
                             ],
             search:{

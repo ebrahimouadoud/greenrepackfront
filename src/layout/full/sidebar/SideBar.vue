@@ -33,6 +33,11 @@
               <span class="hide-in-minisidebar">Catalogue</span>
             </vs-sidebar-item>
         </template>
+        <template >
+            <vs-sidebar-item icon="apartment" :to="'/warehouse'" >
+              <span class="hide-in-minisidebar">Entrepots</span>
+            </vs-sidebar-item>
+        </template>
 
     </vs-sidebar>
     <vs-sidebar v-else default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="sidebarx" spacer v-model="isSidebarActive" :click-not-close="doNotClose" >

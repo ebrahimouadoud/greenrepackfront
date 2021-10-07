@@ -1,37 +1,59 @@
 <template>
   <vs-row>
-    <vs-col vs-lg="3" vs-xs="12">
+    <vs-col vs-lg="6" vs-xs="12">
       <vs-card>
-        <h3 class="mb-1 font-weight-normal">86%</h3>
-        <span class="text-muted">Total Product</span>
-        <vs-progress :percent="70" color="success">success</vs-progress>
+        <h3 class="mb-1 font-weight-normal">{{totalUsers}}</h3>
+        <span class="text-muted">Utilisateurs</span>
+        <vs-progress :percent="100" color="success">success</vs-progress>
       </vs-card>
     </vs-col>
-    <vs-col vs-lg="3" vs-xs="12">
+    <vs-col vs-lg="6" vs-xs="12">
       <vs-card>
-        <h3 class="mb-1 font-weight-normal">40%</h3>
-        <span class="text-muted">Pending Product</span>
-        <vs-progress :percent="25" color="primary">primary</vs-progress>
+        <h3 class="mb-1 font-weight-normal">{{totalProducts}} </h3>
+        <span class="text-muted">Produits gérés</span>
+        <vs-progress :percent="100" color="primary">primary</vs-progress>
       </vs-card>
     </vs-col>
-    <vs-col vs-lg="3" vs-xs="12">
+    <vs-col vs-lg="12" vs-xs="12">
       <vs-card>
-        <h3 class="mb-1 font-weight-normal">56%</h3>
-        <span class="text-muted">Yearly Sales</span>
-        <vs-progress :percent="50" color="warning">warning</vs-progress>
-      </vs-card>
-    </vs-col>
-    <vs-col vs-lg="3" vs-xs="12">
-      <vs-card>
-        <h3 class="mb-1 font-weight-normal">30%</h3>
-        <span class="text-muted">Company Growth</span>
-        <vs-progress :percent="78" color="dark">dark</vs-progress>
+        <h3 class="mb-1 font-weight-normal">{{ totalSales }}</h3>
+        <span class="text-muted">Ventes</span>
+        <vs-progress :percent="100" color="warning">warning</vs-progress>
       </vs-card>
     </vs-col>
   </vs-row>
 </template>
 <script>
+/* eslint-disable */
+import axios from 'axios'
 export default {
-  name: "States"
+  name: "States",
+  data() {
+    return {
+      totalUsers: 0,
+      totalProducts: 0,
+      totalSales: 0,
+      totalAssociations: 0
+    }
+  },
+  mounted() {
+    axios.get('/users/all' )
+            .then( result => {
+                
+                this.totalUsers = result.data.total
+                
+            })
+    axios.get('/products/all')
+      .then( result => {
+                this.totalProducts = result.data.Products.length
+            })
+    axios.get('/orders' )
+      .then( result => {
+          this.totalSales = result.data.rows.length
+          })
+  },
+  methods:{
+    
+  }
 };
 </script>

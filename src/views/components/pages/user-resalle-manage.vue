@@ -36,7 +36,7 @@
                 </template>
                 <template v-slot:cell(etat)="data">
                     
-                    <span v-if="data.item.etat=='En Attendant'" class="label label-warning">En attente</span>
+                    <span v-if="data.item.etat=='En attente'" class="label label-warning">En attente</span>
                     <span v-else-if="data.item.etat=='Validé'" class="label label-success">Validé</span>
                     <span v-else-if="data.item.etat=='Refusé'" class="label label-danger">Refusé</span>
                     <span v-else-if="data.item.etat=='Accepté'" class="label label-info">Accepté</span>
@@ -53,10 +53,10 @@
                 </b-table>    
                 <vs-popup title="Gérer votre revente" :active.sync="managingResall">
                     <div v-if="managingResall">
-                        <vs-alert v-show="resallOnManage.etat=='En Attendant' && resallOnManage.prixPropose"  title="En Attente" active="true" color="warning" class="mb-3">
+                        <vs-alert v-show="resallOnManage.etat=='En attente' && resallOnManage.prixPropose"  title="En Attente" active="true" color="warning" class="mb-3">
                             La revente est en attente vous pouvez accepté ou refuser.
                         </vs-alert>
-                        <vs-alert v-show="resallOnManage.etat=='En Attendant' && !resallOnManage.prixPropose"  title="En Attente de proposition" active="true" color="warning" class="mb-3">
+                        <vs-alert v-show="resallOnManage.etat=='En attente' && !resallOnManage.prixPropose"  title="En Attente de proposition" active="true" color="warning" class="mb-3">
                             La revente va être valeurisée par un de nos agents.
                         </vs-alert>
                         <vs-alert v-if="resallOnManage.etat=='CO' && resallOnManage.prixPropose"  title="En Attente" active="true" color="warning" class="mb-3">
@@ -67,7 +67,7 @@
                             <vs-button @click="acceptCounterOffer()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="proceedRefuseCO()" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
-                        <div v-if="resallOnManage.etat=='En Attendant' && resallOnManage.prixPropose" >
+                        <div v-if="resallOnManage.etat=='En attente' && resallOnManage.prixPropose" >
                             <vs-button @click="proceedAccept()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="refuseResall(resallOnManage.id)" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
