@@ -45,13 +45,25 @@
                         <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.selectedModel.$error }"
                             :options="modelsCollection" value-field="id" text-field="name" type="date" v-model="selectedModel">
                             <b-form-select-option :value="null">Choisir un modele</b-form-select-option>
+                            <b-form-select-option :value=" 'not found' ">Modele non trouvé dans cet liste</b-form-select-option>
                         </b-form-select>
                     </div>
                 </div>
             </div>
-            <div v-if="selectedModel" class="default-input d-flex align-items-center mb-4" :class="{ 'input-icon-validate-danger' : $v.color.$error }">
+            <div v-if="selectedModel == 'not found'" class="default-input d-flex align-items-center mb-4" >
                 <div class="col-1"></div>
-                <div class="vs-component vs-con-input-label vs-input inputx col-3 ml-4 vs-input-primary">
+                <div class="vs-component vs-con-input-label vs-input inputx col-3 ml-4 vs-input-primary" :class="{ 'input-icon-validate-danger' : $v.newModele.$error }">
+                    <label for="" class="vs-input--label">Modele </label>
+                    <div class="vs-con-input">
+                        <input class="vs-inputx vs-input--input normal" type="text" 
+                             v-model="newModele">
+                        <code v-if="$v.newModele.$error" >Champ requis</code>
+                    </div>
+                </div>
+            </div>
+            <div v-if="selectedModel" class="default-input d-flex align-items-center mb-4" >
+                <div class="col-1"></div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-3 ml-4 vs-input-primary" :class="{ 'input-icon-validate-danger' : $v.color.$error }">
                     <label for="" class="vs-input--label">Couleur </label>
                     <div class="vs-con-input">
                         <input class="vs-inputx vs-input--input normal" type="text" 
@@ -69,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="selectedModel && selectedType.name == 'téléphone' " class="default-input d-flex align-items-center mb-4">
+            <div v-if="selectedModel && (selectedType.name == 'téléphone' || selectedType.name == 'tablette') " class="default-input d-flex align-items-center mb-4">
                 <div class="col-1"></div>
                 <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
                     <label for="" class="vs-input--label">Etat de l'écran </label>
@@ -109,6 +121,59 @@
                         </div>
                 </div>
             </div>
+            <div v-if="selectedModel && selectedType.name == 'ordinateur portable' " class="default-input d-flex align-items-center mb-4">
+                <div class="col-1"></div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Etat générale</label>
+                    <div class="vs-con-input">
+                        <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.laptop.condition.$error }"
+                            :options='["comme_neuf", "bonne_état", "abimé", "cassé" ]' type="date" v-model="laptop.condition">
+                            <b-form-select-option :value="null">Choisissez</b-form-select-option>
+                        </b-form-select>
+                    </div>
+                </div>
+                
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Clavier</label>
+                    <div class="vs-con-input">
+                        <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.laptop.Clavier.$error }"
+                            :options='["AZERTY", "QWERTY" ]' v-model="laptop.Clavier">
+                            <b-form-select-option :value="null">Choisissez</b-form-select-option>
+                        </b-form-select>
+                    </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Processeur </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.laptop.Processeur.$error }" class="vs-inputx vs-input--input normal" type="text"
+                             v-model="laptop.Processeur">
+                        </div>
+                </div>
+            </div>
+            <div v-if="selectedModel && selectedType.name == 'ordinateur portable' " class="default-input d-flex align-items-center mb-4">
+                <div class="col-1"></div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Taille de l'écran </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.laptop.Taille_ecran.$error }" class="vs-inputx vs-input--input normal" type="number"
+                             v-model="laptop.Taille_ecran">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">RAM (GO) </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.laptop.RAM.$error }" class="vs-inputx vs-input--input normal" type="number"
+                             v-model="laptop.RAM">
+                        </div>
+                </div>
+                <div class="vs-component vs-con-input-label vs-input inputx col-2 ml-4 vs-input-primary">
+                    <label for="" class="vs-input--label">Stockage (GO) </label>
+                    <div class="vs-con-input">
+                        <input :class="{ 'is-invalid' : $v.laptop.storage.$error }" class="vs-inputx vs-input--input normal" type="number"
+                             v-model="laptop.storage">
+                        </div>
+                </div>
+            </div>
             <div class="default-input d-flex align-items-center mb-4">
                 <div class="col-2"></div>
                 <vs-button @click="saveResall()" :disabled="!localisation" color="success" icon="save">Enregistrer</vs-button>
@@ -139,11 +204,20 @@ export default {
             color: null,
             age: null,
             localisation: null,
+            newModele: null,
             phone: {
                 state_screen: null,
                 state_body:null,
                 simBlocked:null,
                 storage:null,
+            },
+            laptop: {
+                storage: null,
+                RAM: null,
+                Taille_ecran: null,
+                Processeur: null,
+                Clavier: null,
+                condition: null
             },
             geocoder: null
         }
@@ -152,11 +226,13 @@ export default {
         selectedType: function (newVal, val){
             console.log(" newVal , val :: ", val, newVal)
             if(newVal){
+                this.selectedModel = null
                 this.loadBrands()
             }
         },
         selectedBrand: function (newVal, val){
             if(newVal){
+                this.selectedModel = null
                 this.loadModeles()
             }
         }
@@ -200,17 +276,22 @@ export default {
                 console.log(" INVALID :::: this.$v",  this.$v)
             }else{
                 let _stt = null
-                if(this.selectedType.name == 'téléphone' ){
+                this.phone.storage = parseInt(this.phone.storage)
+                if(this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' ){
                     _stt = this.phone
                 }
-                this.phone.storage = parseInt(this.phone.storage)
+                if(this.selectedType.name == 'téléphone'){
+                    _stt = this.laptop
+                    console.log('this.laptop :: ', this.laptop)
+                }
                 axios.
                     post('resall/create', {
                             modeleId: this.selectedModel,
-                            state: this.phone,
-                            description: "any",
+                            state: _stt,
+                            description: "Type: " + this.selectedType.name + ", Marque : " + this.selectedBrand.name + ", Modele (Nv) : " + this.newModele,
                             color: this.color,
                             age: 36,
+                            newModele: this.newModele,
                             localisation: this.localisation
                     } ).then( res => {
                         console.log(res.data.revente.prixPropose)
@@ -227,7 +308,7 @@ export default {
                     }, err =>{
                         swal(   "Operation échoué!",
                                 "Merci de rééssayer ou contacter un administrateur.",
-                                "success");
+                                "error");
                     })
             }
         }
@@ -248,16 +329,35 @@ export default {
         age: {
           required,
         },
+        newModele:{
+            required : requiredIf(function () {
+                return this.selectedModel == 'not found'
+            })
+        },
         phone: {
-            state_screen: requiredIf(function () {
-                return this.selectedType.name == 'téléphone' }),
-            state_body:requiredIf(function () {
-                return this.selectedType.name == 'téléphone' }),
-            simBlocked:requiredIf(function () {
-                return this.selectedType.name == 'téléphone' }),
-            storage:requiredIf(function () {
-                return this.selectedType.name == 'téléphone' })
-        }
+            state_screen: {required : requiredIf(function () {
+                return this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' })},
+            state_body:{ required : requiredIf(function () {
+                return this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' })},
+            simBlocked:{required : requiredIf(function () {
+                return this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' })},
+            storage:{required : requiredIf(function () {
+                return this.selectedType.name == 'téléphone' || this.selectedType.name == 'tablette' })}
+        },
+        laptop: {
+                storage: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })},
+                RAM: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })},
+                Taille_ecran: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })},
+                Processeur: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })},
+                Clavier: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })},
+                condition: {required: requiredIf(function () {
+                return this.selectedType.name == 'ordinateur portable' })}
+            },
     }
 }
 </script>

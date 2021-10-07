@@ -63,7 +63,7 @@
                             Après la vérification du produit, Green repack vous propose une contre offre à {{resallOnManage.prixPropose}}€.
                             Si vous refuser la contre offre, vous allez devoir payer les frais de retour de votre produit.
                         </vs-alert>
-                        <div v-if="resallOnManage.etat=='CO' == resallOnManage.prixPropose" >
+                        <div v-if="resallOnManage.etat=='CO' " >
                             <vs-button @click="acceptCounterOffer()" class="ml-5" color="success" type="filled">Accepter</vs-button>
                             <vs-button @click="proceedRefuseCO()" class="ml-5" color="danger" type="filled">Refuser</vs-button>
                         </div>
@@ -90,13 +90,19 @@
                         </vs-button>
                     </vs-popup>
                     <vs-popup classContent="popup-example" title="Vos Informations Bancaires" :active.sync="refusingCounterOffer">
-                        <vs-input :danger="$v.cardnum.$error" class="inputx mb-4 col-11" placeholder="Numéro de la carte" v-model="cardnum"/>
-                        <vs-input :danger="$v.exp_month.$error" class="inputx mb-4 col-3" placeholder="Mois d'expèration" v-model="exp_month"/>
-                        <vs-input :danger="$v.exp_year.$error" class="inputx mb-4 col-3" placeholder="Année d'expèration" v-model="exp_year"/>
-                        <vs-input :danger="$v.cvc.$error" class="inputx mb-4 col-4" placeholder="CVC" v-model="cvc"/>
-                        <vs-button @click="refuseCO" color="primary" type="filled">
-                            Valider
-                        </vs-button>
+                        <div v-if="!loadingPay">
+                            <vs-input :danger="$v.cardnum.$error" class="inputx mb-4 col-11" placeholder="Numéro de la carte" v-model="cardnum"/>
+                            <vs-input :danger="$v.exp_month.$error" class="inputx mb-4 col-3" placeholder="Mois d'expèration" v-model="exp_month"/>
+                            <vs-input :danger="$v.exp_year.$error" class="inputx mb-4 col-3" placeholder="Année d'expèration" v-model="exp_year"/>
+                            <vs-input :danger="$v.cvc.$error" class="inputx mb-4 col-4" placeholder="CVC" v-model="cvc"/>
+                            <vs-button @click="refuseCO" color="primary" type="filled">
+                                Valider
+                            </vs-button>
+                        </div>
+                        <div v-else class="text-center text-danger my-2">
+                            <b-spinner class="align-middle"></b-spinner>
+                            <strong>Payement en cours ... </strong>
+                        </div>
                     </vs-popup>
                 </vs-popup>
             </div>
@@ -117,6 +123,7 @@ export default {
     data(){
         return{
             fields: [ 
+                    {label: "Produit", key: "produit.name" },
                     {label: "Date et heure", key: "createdAt" },
                     {label: "Prix", key :"prixPropose"  },
                     {label: "Status", key: "etat" },
@@ -132,7 +139,8 @@ export default {
             cardnum: null,
             exp_month: null,
             exp_year: null,
-            cvc: null
+            cvc: null,
+            loadingPay: false
         }
     },
     mounted(){
@@ -189,6 +197,7 @@ export default {
             if(this.$v.cardnum.$error || this.$v.exp_month.$error || this.$v.exp_year.$error || this.$v.cvc.$error){
                 //
             }else{
+                this.loadingPay = true
                 axios.put('/resall/counteroffer/refuse/' + this.resallOnManage.id, {
                     number: this.cardnum,
                     exp_month: this.exp_month ,
@@ -199,6 +208,7 @@ export default {
                             swal("",
                                 "Refus enregistré.",
                                 "success");
+                            this.loadingPay = false
                             this.managingResall = false
                             this.resallOnManage = null
                             this.accepting = false
@@ -211,6 +221,7 @@ export default {
                             this.accepting = false
                             this.resallOnManage = null
                             this.refusingCounterOffer = false
+                            this.loadingPay = false
                             swal("Paiement refusé!",
                                 "Veuillez réessayez.",
                                 "error");

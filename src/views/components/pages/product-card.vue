@@ -10,13 +10,13 @@
                     </button>
                 </h4>
                 <div class="vs-list">
-                    <div class="vs-list--item">
+                    <div v-if="product.modele" class="vs-list--item">
                         <div class="list-titles">
                             <div class="vs-list--title">Type du produit</div>
                             <div class="vs-list--subtitle" > {{ product.modele.type.name }}  </div>
                         </div>
                     </div>
-                    <div class="vs-list--item">
+                    <div v-if="product.modele" class="vs-list--item">
                         <div class="list-titles">
                             <div class="vs-list--title">Modèle</div>
                             <div class="vs-list--subtitle" > {{ product.modele.name }}  </div>

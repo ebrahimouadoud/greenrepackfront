@@ -21,7 +21,7 @@
                             <models></models>
                         </b-tab>
                         <b-tab title="Prix">
-                            <b-card-text>Tab contents 2</b-card-text>
+                            <pricecases></pricecases>
                         </b-tab>
                     </b-tabs>
             </div>
@@ -34,6 +34,7 @@ import brc from '../custom/breadc.vue'
 import axios from 'axios';
 import brands from './brands-manage.vue'
 import types from './types-manage.vue'
+import pricecases from './pricescases-manage.vue'
 import models from './models-manage.vue'
 /* eslint-disable */
 export default {
@@ -42,7 +43,8 @@ export default {
         brc,
         brands,
         types,
-        models
+        models,
+        pricecases
     },
     data(){
         return{

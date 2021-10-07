@@ -95,9 +95,9 @@
                 <template v-slot:cell(phase)="data">
                     
                     <span v-if="data.item.phase=='En Attend' && (data.item.revente.etat=='En Attendant' || data.item.revente.etat=='Accepté')" class="label label-warning">En attente</span>
+                    <span v-else-if="data.item.phase=='Renvoyé'" class="label label-danger">Renvoyé</span>
                     <span v-else-if="data.item.revente.etat=='Refusé'" class="label label-danger">Revente refusé</span>
                     <span v-else-if="data.item.phase=='Reçu'" class="label label-success">Reçu</span>
-                    <span v-else-if="data.item.phase=='Renvoyé'" class="label label-danger">Renvoyé</span>
                     <span v-else-if="data.item.phase=='En vente'" class="label label-info">En vente <span> à {{data.item.prix_vente}} </span> </span> 
                     <span v-else-if="data.item.phase=='Vendu'" class="label label-inverse">Vendu</span>
                     
@@ -106,6 +106,9 @@
 
                     <vs-button @click="notifyArrival(data.item.id)" v-if="data.item.phase=='En Attend' && data.item.revente.etat=='Accepté'" color="primary" type="border" icon="meeting_room">
                         Réçu
+                    </vs-button>
+                    <vs-button @click="notReturn(data.item.id)" v-if="data.item.revente.etat=='Refusé' && data.item.phase=='Reçu' " color="primary" type="border" icon="logout">
+                        Renvoyer
                     </vs-button>
                     <vs-button v-if="data.item.phase=='Reçu' && data.item.revente.etat=='Validé'"
                         @click="sellProduct(data.item)" 
@@ -118,6 +121,15 @@
                     </button>
                 </template>
                 </b-table>
+                <vs-popup title="Gérer votre revente" :active.sync="returning">
+                    <vs-alert  title="Commande a envoyer" active="true" color="warning" class="mb-3">
+                        Commande confirmé, renseignez le numéro de suivie pour confirmer l'envoie.
+                    </vs-alert>
+                    <vs-input :danger="tracking == null "  class="inputx mb-4 col-11" placeholder="Numéro de suivie" v-model="tracking"/>
+                    <vs-button @click="notifyReturn()" color="primary" type="filled">
+                        Envoyer
+                    </vs-button>
+                </vs-popup>
                 <vs-popup title="Gérer votre revente" :active.sync="salingProduct">
                         <div v-if="salingProduct" class="vs-list">
                             <div class="vs-list--item">
@@ -245,7 +257,10 @@ export default {
             typesCollection:[],
             phasesCollection: ['En Attend', 'Reçu', 'Renvoyé', 'En vente', 'Vendu'],
             warehousesCollection: [],
-            productsCollection: []
+            productsCollection: [],
+            tracking: null,
+            productToReturn : null,
+            returning : false
         }
     },
     mounted() {
@@ -265,6 +280,27 @@ export default {
         checkProduct(prd){
             this.showingProduct = true
             this.productOnShow = prd
+        },
+        notReturn(prd){
+            this.productToReturn = prd
+            this.returning = true
+        },
+        notifyReturn(){
+            if(this.tracking){
+                axios.put('product/return/'+ this.productToReturn , { tracking : this.tracking })
+                    .then( res => {
+                        this.returning = false
+                        swal("Renvoie enregistré!",
+                            "",
+                            "success");
+                        this.loadData()
+                    }, err => {
+                        this.returning = false
+                        swal("Erreur!",
+                            "Une erreur est survenue, veuillez contacter un administrateur",
+                            "error");
+                    })
+            }   
         },
         loadData(){
             console.log("loading")

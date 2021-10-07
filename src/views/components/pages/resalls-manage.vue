@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="vs-list--slot"></div>
                             </div>
-                            <div class="vs-list--item">
+                            <div v-if="resallOnManage.produit.modele" class="vs-list--item">
                                 <div class="list-titles">
                                     <div class="vs-list--title">Modèle</div>
                                     <div class="vs-list--subtitle"> {{ resallOnManage.produit.modele.name }}  </div>
@@ -293,6 +293,9 @@ export default {
                             this.resallOnManage = null
                             this.makingCounterOffer = false
                             this.loadData()
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -312,6 +315,9 @@ export default {
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
                             this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
@@ -347,6 +353,10 @@ export default {
                             this.resallOnManage = null
                             this.makingCounterOffer = false
                             this.loadData()
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
                             this.$refs.resalls.refresh();
                         },error => {
                             this.managingResall = false
@@ -372,13 +382,17 @@ export default {
                 } )
                     .then(result =>{
                             swal("",
-                                "Acceptée.",
+                                "Enregistré.",
                                 "success");
                             this.managingResall = false
                             this.resallOnManage = null
                             this.makingCounterOffer = false
-                            this.loadData()
                             this.$refs.resalls.refresh();
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
+                            this.loadData()
                         },error => {
                             this.managingResall = false
                             this.makingCounterOffer = false
@@ -397,6 +411,9 @@ export default {
                         swal("",
                             "Acceptée.",
                             "success");
+                        this.loadData()
+                        this.loadData()
+                        this.loadData()
                         this.loadData()
                         this.$refs.resalls.refresh();
                         this.managingResall = false
