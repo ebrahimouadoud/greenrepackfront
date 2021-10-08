@@ -65,8 +65,8 @@
                     
                     <span v-if="data.item.status=='En attente'" style="border-radius: 0px;" class="label label-warning">En attente</span>
                     <span v-else-if="data.item.status=='Refusé'" style="border-radius: 0px;" class="label label-danger">Refusé</span>
-                    <span v-else style="border-radius: 0px;" class="label label-success">Validé</span>
-                    
+                    <span v-else-if="data.item.status=='Validé'" style="border-radius: 0px;" class="label label-info">Validé</span>
+                    <span v-else style="border-radius: 0px;" class="label label-success">Prie en charge</span>
                 </template>
                 </b-table>
                 <div class="mt-3">
