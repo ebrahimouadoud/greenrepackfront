@@ -113,6 +113,7 @@ export default {
                     email: this.email,
                     password: this.password,
                     telephone: this.telephone,
+                    adresse: 'ANY'
                 }).then(result =>
                     {
                         swal("Operation réussie!",
@@ -122,7 +123,7 @@ export default {
                         this.$router.push('/users')
                     }, error=>{
                         console.log('save error' ,error)
-                        swal("Operation réussie!",
+                        swal("Erreur!",
                             "",
                             "error");
                     }
@@ -139,6 +140,7 @@ export default {
                         username: this.username,
                         email: this.email,
                         telephone: this.telephone,
+                        adresse: 'ANY'
                     }).then(result =>
                         {
                             swal("Operation réussie!",
@@ -147,7 +149,9 @@ export default {
                             console.log(result)
                             this.$router.push('/users')
                         }, error=>{
-                            
+                            swal("Erreur!",
+                                "",
+                                "error");
                             })
                     }
                 }
