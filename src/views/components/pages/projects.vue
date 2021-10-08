@@ -125,23 +125,6 @@ export default {
                         "error");
             }  )
         },
-        goEdit(id){
-            this.$router.push('/user/edit/'+ id )
-        },
-        deleteUser(id){
-            axios.delete('/user/' + id )
-                .then(result =>{
-                        this.$refs.userstab.refresh();
-                        swal("",
-                            "Supprimé avec succés.",
-                            "success");
-                    },error => {
-                        swal("Erreur!",
-                            "Une erreur est survenue, veuillez contacter un administrateur",
-                            "error");
-                    }
-                )
-        },
         filter(){
             this.tSearch = this.search
             this.c_Page = 1
