@@ -110,6 +110,34 @@
                         <div class="vs-list">
                             <div class="vs-list--item">
                                 <div class="list-titles">
+                                    <div class="vs-list--title">Nom du marchand</div>
+                                    <div class="vs-list--subtitle"> {{ resallOnManage.user.firstname + " " +resallOnManage.user.lastname }} </div>
+                                </div>
+                                <div class="vs-list--slot"></div>
+                            </div>
+                            <div class="vs-list--item">
+                                <div class="list-titles">
+                                    <div class="vs-list--title">adresse mail</div>
+                                    <div class="vs-list--subtitle"> {{ resallOnManage.user.email}} </div>
+                                </div>
+                                <div class="vs-list--slot"></div>
+                            </div>
+                            <div class="vs-list--item">
+                                <div class="list-titles">
+                                    <div class="vs-list--title">adresse de domicile</div>
+                                    <div class="vs-list--subtitle"> {{ resallOnManage.user.adresse}} </div>
+                                </div>
+                                <div class="vs-list--slot"></div>
+                            </div>
+                            <div class="vs-list--item">
+                                <div class="list-titles">
+                                    <div class="vs-list--title">Téléphone du marchand</div>
+                                    <div class="vs-list--subtitle"> {{ resallOnManage.user.telephone}} </div>
+                                </div>
+                                <div class="vs-list--slot"></div>
+                            </div>
+                            <div class="vs-list--item">
+                                <div class="list-titles">
                                     <div class="vs-list--title">Titre</div>
                                     <div class="vs-list--subtitle"> {{ resallOnManage.produit.name }} </div>
                                 </div>

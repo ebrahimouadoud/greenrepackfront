@@ -143,6 +143,19 @@ export default new Router({
                     } ,
                     component: () => import('./views/components/pages/resalls-manage.vue')
                 },{
+                    path: '/projects',
+                    name: 'projects',
+                    index: 35,
+                    beforeEnter:(to, from, next) => {
+                        console.log( ' :::: auth.isAdminOrManager :::: ', auth.isAdminOrManager())
+                        if(auth.isAdminOrManager()){
+                            next()
+                        }else{
+                            next('/store')
+                        }
+                    } ,
+                    component: () => import('./views/components/pages/projects.vue')
+                },{
                     path: '/catalogue',
                     name: 'catalogue',
                     index: 34,
