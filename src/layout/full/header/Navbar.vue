@@ -111,7 +111,6 @@ export default {
       this.$store.commit("IS_SIDEBAR_ACTIVE", true);
     },
     logout(){
-      this.$router.push('/home')
       console.log(' LOGOUT ')
       this.auth.logout()
     }

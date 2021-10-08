@@ -4,7 +4,7 @@
             <div v-if="! editing" class="card-body">
                 <h4 class="card-title d-flex">
                     Fiche de produit
-                    <button type="button" @click="editing = true" name="button" class=" btn btn-info btn-circle vs-component vs-button ml-auto p-0 vs-button-line" 
+                    <button v-if="showEdit" type="button" @click="editing = true" name="button" class=" btn btn-info btn-circle vs-component vs-button ml-auto p-0 vs-button-line" 
                         style="border-radius: 100%;">
                         <i class="ti-pencil-alt"></i>
                     </button>
@@ -85,6 +85,17 @@
                         
                     </div>
                 </div>
+                <div v-if="prdData.modeleId == null" class="vs-component vs-con-input-label vs-input inputx col-8 ml-5 vs-input-primary">
+                    <div class="col-1"></div>
+                    <label for="" class="vs-input--label">Modele</label>
+                    <div class="vs-con-input">
+                        <b-form-select class="vs-inputx vs-input--input normal" :class="{ 'is-invalid' : $v.prdData.modeleId.$error }"
+                            :options="modelsCollection" value-field="id" text-field="name" type="date" v-model="prdData.modeleId">
+                            <b-form-select-option :value="null">Choisir un modele</b-form-select-option>
+                            <b-form-select-option :value=" 'not found' ">Modele non trouvé dans cet liste</b-form-select-option>
+                        </b-form-select>
+                    </div>
+                </div>
                 <div class="default-input d-flex align-items-center mb-2 ml-4">
                     <div class="vs-component vs-con-input-label vs-input inputx col-10 ml-4 vs-input-primary" :class="{ 'input-icon-validate-danger' : $v.prdData.prix_vente.$error }">
                         <label for="" class="vs-input--label">Prix de vente </label>
@@ -125,6 +136,9 @@ export default {
     props: {
         product: {
             type: Object
+        },
+        showEdit:{
+            type: Boolean
         }
     },
     data() {
@@ -135,16 +149,24 @@ export default {
                 couleur: null,
                 description: null,
                 prix_vente: null,
-                age: null
-            }
+                age: null,
+                modeleId: null
+            },
+            selectedModel: null,
+            modelsCollection: []
         }
     },
     mounted() {
+        console.log(' ::: this.prdData ::: ', this.prdData)
         this.prdData.name = this.product.name
         this.prdData.couleur = this.product.couleur
         this.prdData.description = this.product.description
         this.prdData.prix_vente = this.product.prix_vente
         this.prdData.age = this.product.age
+        this.prdData.modeleId = this.product.modeleId
+        axios.get('model/all').then( res => {
+            this.modelsCollection = res.data.rows
+        })
     },
     filters: {
         stateFilter: function (value) {
@@ -167,7 +189,8 @@ export default {
                             description: this.prdData.description ,
                             couleur: this.prdData.couleur ,
                             age: this.prdData.age ,
-                            prix_vente: this.prdData.prix_vente
+                            prix_vente: this.prdData.prix_vente,
+                            modeleId: this.prdData.modeleId
                     } ).then( res => {
                         swal("Modification enregistrée!",
                             "",
@@ -200,6 +223,9 @@ export default {
             },
             age: {
                 required,
+            },
+            modeleId:{
+                required
             }
         }
     }

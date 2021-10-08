@@ -168,6 +168,7 @@ export default {
                         this.$parent.loadMyCart()
                         this.$parent.gerMyGCBalance()
                         this.$router.push('/myorders')
+                        location.reload()
                 }, err=> {
                     this.payingCommand = false
                     this.loadingPay = false

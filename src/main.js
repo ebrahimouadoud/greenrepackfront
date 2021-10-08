@@ -29,7 +29,7 @@ import VsPrism from './components/prism/VsPrism.vue';
 Vue.component(VsPrism.name, VsPrism);
 Vue.use(Vuelidate)
 
-Vue.axios.defaults.baseURL = 'http://localhost:3000/api/'
+Vue.axios.defaults.baseURL = 'https://greenrepackmarket.fr/api/'
 
 //Vue.http.headers.common['Access-Control-Allow-Origin'] = true
 //Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'

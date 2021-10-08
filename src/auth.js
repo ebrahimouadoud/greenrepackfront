@@ -2,6 +2,7 @@
 
 import swal from 'sweetalert';
 import axios from 'axios';
+import Router from './router'
 export default {
     checked: false,
     user: {
@@ -39,6 +40,11 @@ export default {
                     that.user.email = result.data.email
                     that.user.adresse = result.data.adresse
                     that.checked = true
+                    if(this.user.role=="ROLE_ADMIN" || this.user.role=="ROLE_MANAGER" ){
+                        Router.push('/home')
+                    }else{
+                        Router.push('/store')
+                    }
                 },
                 error=>{
                     that.checked =true
@@ -77,6 +83,11 @@ export default {
             this.user.adresse = result.data.adresse
             localStorage.setItem('x-access-token', result.data.accessToken)
             axios.defaults.headers.common['x-access-token'] = localStorage.getItem('x-access-token')
+            if(this.user.role=="ROLE_ADMIN" || this.user.role=="ROLE_MANAGER" ){
+                Router.push('/home')
+            }else{
+                Router.push('/store')
+            }
         }, error => {
             this.checked = true
             if (error.response.status == 404) {

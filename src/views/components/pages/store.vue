@@ -63,12 +63,15 @@
                                 class="py-2 d-block"
                             > {{ prd.description.substring(0,30) }}... </span>
                             </div>
-                            <vs-button color="primary" type="border"><i class="mdi mdi-eye"></i> Consulter </vs-button>
+                            <vs-button @click="checkProduct(prd)" color="primary" type="border"><i class="mdi mdi-eye"></i> Consulter </vs-button>
                             <vs-button @click="addProductToCard(prd.id)"
                              color="primary" class="ml-3" type="border"> <i class="mdi mdi-cart-plus"> </i> </vs-button>
                         </vs-card>
                     </vs-col>
                 </vs-row>
+                <vs-popup title="Détails du produit" :active.sync="showingProduct">
+                    <prdcard v-if="showingProduct" :product="productOnShow" :showEdit="false"></prdcard>
+                </vs-popup>
                 <div class="mt-3">
                     <b-pagination
                         v-model="c_Page"
@@ -85,12 +88,14 @@
 import ThemifyIcon from "vue-themify-icons";
 import brc from '../custom/breadc.vue'
 import axios from 'axios';
+import prdcard from './product-card.vue'
 import { required, email, sameAs, minLength, requiredUnless, requiredIf } from 'vuelidate/lib/validators'
 /* eslint-disable */
 export default {
     components: {
         ThemifyIcon,
-        brc
+        brc,
+        prdcard
     },
     data(){
         return{
@@ -112,6 +117,8 @@ export default {
             nameDeVente: null,
             productsCollection: [],
             typesCollection:[],
+            productOnShow: null,
+            showingProduct: null,
             search:{
                 selectedType: null,
                 titre: null
@@ -127,6 +134,10 @@ export default {
             })
     },
     methods:{
+        checkProduct(prd){
+            this.showingProduct = true
+            this.productOnShow = prd
+        },
         loadData(){
             console.log("loading")
             let query = ''

@@ -202,7 +202,7 @@
                     
                 </vs-popup>
                 <vs-popup title="Détails du produit" :active.sync="showingProduct">
-                    <prdcard v-if="showingProduct" :product="productOnShow"></prdcard>
+                    <prdcard v-if="showingProduct" :showEdit="true" :product="productOnShow"></prdcard>
                 </vs-popup>
                 <div class="mt-3">
                     <b-pagination
@@ -278,6 +278,7 @@ export default {
     },
     methods:{
         checkProduct(prd){
+            console.log( ' :::: prd :::: ', prd)
             this.showingProduct = true
             this.productOnShow = prd
         },
